@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .ease-snappy {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-hecate-ivory font-sans text-hecate-text antialiased;
+    background-color: #faf8f5;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply mb-3 text-xs font-medium uppercase tracking-[0.15em] text-hecate-accent block;
+  }
+
+  .section-title {
+    @apply mb-6 font-serif text-3xl md:text-4xl font-bold text-hecate-primary;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-hecate-secondary px-6 py-3 font-medium text-white transition-all duration-500 ease-snappy hover:scale-[1.03] hover:bg-opacity-95 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-hecate-secondary focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-hecate-text bg-transparent px-6 py-3 font-medium text-hecate-text transition-all duration-500 ease-snappy hover:bg-hecate-text hover:text-white focus:outline-none focus:ring-2 focus:ring-hecate-text focus:ring-offset-2;
+  }
+  
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-md border border-white/20 shadow-sm transition-all duration-500 ease-snappy;
+  }
+}
+
+/* Custom transitions and utilities */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(26, 26, 46, 0.05);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(196, 30, 58, 0.2);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 30, 58, 0.4);
+}
