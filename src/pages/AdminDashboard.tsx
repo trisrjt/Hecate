@@ -409,10 +409,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
         </div>
       </aside>
 
-      {/* Main View Area */}
       <main className="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen scrollbar-thin">
         {activeTab === 'seo' ? (
-          <div className="space-y-8 max-w-5xl">
+          <div className="space-y-8 w-full">
             {/* Top Bar selector */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-hecate-border">
               <div>
@@ -693,7 +692,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             </div>
           </div>
         ) : (
-          <div className="space-y-8 max-w-5xl">
+          <div className="space-y-8 w-full">
             {/* Top Header & Search inquiries bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-hecate-border">
               <div>

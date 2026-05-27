@@ -31,10 +31,10 @@ export const ServiceDetail: React.FC = () => {
       ],
       gallery: [
         'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80',
-        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80',
+        '/images/service-living.jpg',
         'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80',
       ],
-      bgImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+      bgImage: '/images/service-living.jpg',
     },
     'modern-kitchen': {
       title: 'Modern Kitchen',
@@ -49,11 +49,11 @@ export const ServiceDetail: React.FC = () => {
         'Complete kitchen packages available',
       ],
       gallery: [
-        'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80',
+        '/images/service-kitchen.jpg',
         'https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=600&q=80',
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
       ],
-      bgImage: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
+      bgImage: '/images/service-kitchen.jpg',
     },
     'modern-office': {
       title: 'Modern Office',
@@ -68,11 +68,11 @@ export const ServiceDetail: React.FC = () => {
         'Full office fit-out project management',
       ],
       gallery: [
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
+        '/images/service-office.jpg',
         'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
         'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=600&q=80',
       ],
-      bgImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+      bgImage: '/images/service-office.jpg',
     },
     'modern-bedroom': {
       title: 'Modern Bedroom',
@@ -87,11 +87,11 @@ export const ServiceDetail: React.FC = () => {
         'Hotel-grade durability and finish standards',
       ],
       gallery: [
-        'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',
+        '/images/service-bedroom.jpg',
         'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=600&q=80',
         'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=600&q=80',
       ],
-      bgImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+      bgImage: '/images/service-bedroom.jpg',
     },
     'kids-baby-room': {
       title: "Kid's & Baby Room",
@@ -106,11 +106,11 @@ export const ServiceDetail: React.FC = () => {
         'Bulk pricing for schools and institutions',
       ],
       gallery: [
-        'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80',
+        '/images/service-kids.jpg',
         'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
         'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80',
       ],
-      bgImage: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1200&q=80',
+      bgImage: '/images/service-kids.jpg',
     },
   };
 

@@ -18,35 +18,35 @@ export const Services: React.FC = () => {
     {
       id: 'modern-living',
       title: 'Modern Living',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-living.jpg',
       desc: 'Contemporary living room furniture that combines sophistication and functionality. From sofas and coffee tables to entertainment units and shelving.',
       subcategories: ['Modular Sofas', 'Coffee Tables', 'TV Units', 'Bookshelves', 'Accent Chairs'],
     },
     {
       id: 'modern-kitchen',
       title: 'Modern Kitchen',
-      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-kitchen.jpg',
       desc: 'Sleek and functional kitchen interiors with premium cabinetry, islands, and storage solutions designed for modern homes.',
       subcategories: ['Modular Cabinets', 'Kitchen Islands', 'Pantry Units', 'Dining Sets', 'Storage Solutions'],
     },
     {
       id: 'modern-office',
       title: 'Modern Office',
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-office.jpg',
       desc: 'Ergonomic and stylish workspace furniture for productive corporate environments, co-working spaces, and home offices.',
       subcategories: ['Workstations', 'Conference Tables', 'Executive Desks', 'Storage Cabinets', 'Reception Desks'],
     },
     {
       id: 'modern-bedroom',
       title: 'Modern Bedroom',
-      image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-bedroom.jpg',
       desc: 'Serene and elegant bedroom furnishings designed for restful spaces. From beds and wardrobes to nightstands and dressers.',
       subcategories: ['Platform Beds', 'Wardrobes', 'Nightstands', 'Dressers', 'Vanity Units'],
     },
     {
       id: 'kids-baby-room',
       title: "Kid's & Baby Room",
-      image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-kids.jpg',
       desc: 'Playful, safe, and creative furniture designed for children. Colorful, durable, and thoughtfully crafted for little ones.',
       subcategories: ['Bunk Beds', 'Study Tables', 'Toy Storage', 'Playroom Sets'],
     },
@@ -87,7 +87,7 @@ export const Services: React.FC = () => {
       <PageHeader
         title="Our Furniture Collections"
         subtitle="Premium furniture solutions for every space in your home or office"
-        bgImage="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80"
+        bgImage="/images/service-living.jpg"
       />
 
       {/* Services Grid */}

@@ -25,7 +25,7 @@ const ScrollToTop: React.FC = () => {
 // Layout wrapper to conditionally hide navbar/footer in Admin panel
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+  const isAdminRoute = location.pathname.startsWith('/admin_hecate_v1');
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -62,7 +62,7 @@ const AnimatedRoutes: React.FC = () => {
           <Route path="/projects" element={<Projects />} />
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin_hecate_v1" element={<Admin />} />
           {/* Fallback to home */}
           <Route path="*" element={<Home />} />
         </Routes>

@@ -28,22 +28,20 @@ export const Navbar: React.FC = () => {
       {/* Top Contact Bar */}
       <div className="bg-hecate-primary text-white py-2 px-4 hidden md:block text-xs font-light tracking-wide">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-6">
-            <a
-              href="mailto:hecatemodularfurniture@gmail.com"
-              className="flex items-center gap-2 hover:text-hecate-accent transition-colors"
-            >
-              <Mail size={12} className="text-hecate-accent" />
-              <span>hecatemodularfurniture@gmail.com</span>
-            </a>
-            <a
-              href="tel:+918697610701"
-              className="flex items-center gap-2 hover:text-hecate-accent transition-colors"
-            >
-              <Phone size={12} className="text-hecate-accent" />
-              <span>+91 86976 10701</span>
-            </a>
-          </div>
+          <a
+            href="mailto:hecatemodularfurniture@gmail.com"
+            className="flex items-center gap-2 hover:text-hecate-accent transition-colors"
+          >
+            <Mail size={12} className="text-hecate-accent" />
+            <span>hecatemodularfurniture@gmail.com</span>
+          </a>
+          <a
+            href="tel:+918697610701"
+            className="flex items-center gap-2 hover:text-hecate-accent transition-colors"
+          >
+            <Phone size={12} className="text-hecate-accent" />
+            <span>+91 86976 10701</span>
+          </a>
         </div>
       </div>
 

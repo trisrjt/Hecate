@@ -26,11 +26,11 @@ export const Projects: React.FC = () => {
       location: 'Rawdon Street, Kolkata',
       category: 'Co-working',
       desc: 'A premium co-working space featuring custom modular workstations, collaborative lounges, and private phone booths designed for productivity and comfort.',
-      image: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=600&q=80',
+      image: '/images/project-collab.jpg',
       gallery: [
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
-        'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
-        'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=600&q=80',
+        '/images/service-office.jpg',
+        '/images/about-workshop.jpg',
+        '/images/project-collab.jpg',
       ],
     },
     {
@@ -38,11 +38,11 @@ export const Projects: React.FC = () => {
       location: 'Delta Building, Salt Lake, Kolkata',
       category: 'Corporate',
       desc: 'Complete office fit-out including executive desks, customer service counters, meeting room furniture, and employee workstations.',
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+      image: '/images/project-bank.jpg',
       gallery: [
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
-        'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+        '/images/service-office.jpg',
+        '/images/about-workshop.jpg',
+        '/images/project-bank.jpg',
       ],
     },
     {
@@ -98,22 +98,22 @@ export const Projects: React.FC = () => {
   const certificates = [
     {
       title: 'GREEN GUARD Certificate',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=400&q=80',
+      image: '/images/awards.jpg',
       desc: 'Certified for low chemical emissions, ensuring indoor air quality and environmental safety.',
     },
     {
       title: 'Udyam Registration Certificate',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=400&q=80',
+      image: '/images/awards.jpg',
       desc: 'Official MSME registration by the Government of India, recognizing us as a trusted manufacturer.',
     },
     {
       title: 'ISO 9001:2015 Certificate',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=400&q=80',
+      image: '/images/awards.jpg',
       desc: 'International certification for our quality management systems, ensuring consistent product quality.',
     },
     {
       title: 'BIFMA Certification',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=400&q=80',
+      image: '/images/awards.jpg',
       desc: 'Business and Institutional Furniture Manufacturers Association certification for safety, durability, and structural adequacy.',
     },
   ];
@@ -187,7 +187,7 @@ export const Projects: React.FC = () => {
       <PageHeader
         title="Our Recent Projects"
         subtitle="Explore our portfolio of completed commercial and residential furniture projects"
-        bgImage="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=1200&q=80"
+        bgImage="/images/project-collab.jpg"
       />
 
       {/* Portfolio segment */}

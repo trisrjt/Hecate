@@ -48,7 +48,7 @@ export const About: React.FC = () => {
       <PageHeader
         title="About HECATE"
         subtitle="Specialist Furniture Supplier for the Hospitality Industry"
-        bgImage="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80"
+        bgImage="/images/hero-3.jpg"
       />
 
       {/* Profile Section */}
@@ -85,7 +85,7 @@ export const About: React.FC = () => {
             <ScrollReveal delay={0.2}>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80"
+                  src="/images/about-workshop.jpg"
                   alt="Hecate Furniture Showroom"
                   className="rounded-lg shadow-xl w-full h-[450px] object-cover"
                 />

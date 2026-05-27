@@ -23,7 +23,7 @@ export const Certificates: React.FC = () => {
       subtitle: 'Indoor Air Quality Certified',
       desc: 'Certified for low chemical emissions, ensuring indoor air quality and environmental safety.',
       longDesc: 'The GREEN GUARD Certification program gives assurance that products designed for use in indoor spaces meet strict chemical emissions limits, contributing to the creation of healthier interiors. Highly recommended for commercial office layouts and children\'s spaces where air quality directly correlates to wellness and productivity.',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=600&q=80',
+      image: '/images/awards.jpg',
     },
     {
       id: 'msme',
@@ -31,7 +31,7 @@ export const Certificates: React.FC = () => {
       subtitle: 'Government of India MSME',
       desc: 'Official MSME registration by the Government of India, recognizing us as a trusted manufacturer.',
       longDesc: 'The Udyam Registration is a government declaration issued by the Ministry of Micro, Small and Medium Enterprises. This certifies our compliance as a legally recognized, institutional modular furniture designer and supplier, eligible for government contracts and public tenders.',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=600&q=80',
+      image: '/images/awards.jpg',
     },
     {
       id: 'iso',
@@ -39,7 +39,7 @@ export const Certificates: React.FC = () => {
       subtitle: 'Quality Management System',
       desc: 'International certification for our quality management systems, ensuring consistent product quality.',
       longDesc: 'Our ISO 9001:2015 certification guarantees that HECATE adheres to strict quality management principles, including a strong customer focus, systematic procedural audits, and continual improvement. Every batch of commercial furniture leaves our facility under exact QC standards.',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=600&q=80',
+      image: '/images/awards.jpg',
     },
     {
       id: 'bifma',
@@ -47,7 +47,7 @@ export const Certificates: React.FC = () => {
       subtitle: 'Institutional Durability Standards',
       desc: 'Business and Institutional Furniture Manufacturers Association certification for safety and durability.',
       longDesc: 'BIFMA sponsors the development of safety and performance standards, providing a common basis for evaluating institutional furniture. BIFMA certified desks and chairs ensure structural adequacy, durability under heavy corporate load cycles, and extreme user safety.',
-      image: 'https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=600&q=80',
+      image: '/images/awards.jpg',
     },
   ];
 
@@ -59,7 +59,7 @@ export const Certificates: React.FC = () => {
       <PageHeader
         title="Certifications & Accreditations"
         subtitle="Recognized quality standards that reflect our commitment to excellence"
-        bgImage="https://images.unsplash.com/photo-1589330694653-ded6df53f7ee?auto=format&fit=crop&w=1200&q=80"
+        bgImage="/images/awards.jpg"
       />
 
       {/* Description Detail Grid */}

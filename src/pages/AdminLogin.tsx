@@ -19,11 +19,14 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
 
     // Simulate authentication
     setTimeout(() => {
-      if (username === 'admin' && password === 'admin123') {
+      const expectedUsername = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
+      const expectedPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+
+      if (username === expectedUsername && password === expectedPassword) {
         sessionStorage.setItem('hecate_admin_auth', 'true');
         onLoginSuccess();
       } else {
-        setError('Invalid username or password. (Hint: admin / admin123)');
+        setError('Invalid username or password.');
       }
       setLoading(false);
     }, 800);
@@ -73,7 +76,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
                 <input
                   type="text"
                   required
-                  placeholder="admin"
+                  placeholder="Enter username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary transition-colors font-light text-sm text-hecate-text"

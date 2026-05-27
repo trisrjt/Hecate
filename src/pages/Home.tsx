@@ -17,17 +17,17 @@ export const Home: React.FC = () => {
 
   const slides: HeroSlide[] = [
     {
-      image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80',
+      image: '/images/hero-1.jpg',
       title: 'Redefining Spaces with Modern Elegance',
       subtitle: 'Premium contract furniture solutions for modern workplaces and homes',
     },
     {
-      image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
+      image: '/images/hero-2.jpg',
       title: 'Innovate Your Space, Inspire Your Life',
       subtitle: 'Bespoke furniture crafted for hospitality, corporate, and residential projects',
     },
     {
-      image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=80',
+      image: '/images/hero-3.jpg',
       title: 'Crafting Modern Comfort for Every Space',
       subtitle: 'From concept to installation — bulk orders, custom designs, exceptional quality',
     },
@@ -52,25 +52,25 @@ export const Home: React.FC = () => {
   const collections = [
     {
       title: 'Modern Living',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-living.jpg',
       desc: 'Contemporary living room furniture designed for comfort and style.',
       path: '/services/modern-living',
     },
     {
       title: 'Modern Kitchen',
-      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-kitchen.jpg',
       desc: 'Sleek modular kitchen solutions with premium finishes.',
       path: '/services/modern-kitchen',
     },
     {
       title: 'Modern Office',
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-office.jpg',
       desc: 'Ergonomic workspace furniture for productive environments.',
       path: '/services/modern-office',
     },
     {
       title: 'Modern Bedroom',
-      image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',
+      image: '/images/service-bedroom.jpg',
       desc: 'Serene bedroom furnishings for restful spaces.',
       path: '/services/modern-bedroom',
     },
@@ -138,48 +138,31 @@ export const Home: React.FC = () => {
 
             {/* Slide Content (Staggered entry) */}
             {index === currentSlide && (
-              <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
+              <div className="absolute inset-0 z-20 flex items-center justify-center text-center text-white px-4">
                 <div className="max-w-4xl mx-auto">
-                  <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                      hidden: {},
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.15,
-                        },
-                      },
-                    }}
-                  >
+                  <div>
                     <motion.h1
-                      variants={{
-                        hidden: { opacity: 0, y: 15 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                       className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight drop-shadow-lg"
                     >
                       {slide.title}
                     </motion.h1>
 
                     <motion.p
-                      variants={{
-                        hidden: { opacity: 0, y: 15 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto drop-shadow-md font-light leading-relaxed"
                     >
                       {slide.subtitle}
                     </motion.p>
 
                     <motion.div
-                      variants={{
-                        hidden: { opacity: 0, y: 15 },
-                        visible: { opacity: 1, y: 0 },
-                      }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                       className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
                       <Link to="/contact" className="btn-primary">
@@ -192,7 +175,7 @@ export const Home: React.FC = () => {
                         View Our Work
                       </Link>
                     </motion.div>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             )}
@@ -253,7 +236,7 @@ export const Home: React.FC = () => {
             <ScrollReveal delay={0.2}>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
+                  src="/images/about-workshop.jpg"
                   alt="Hecate Furniture Workshop"
                   className="rounded-lg shadow-xl w-full h-[400px] object-cover"
                 />
