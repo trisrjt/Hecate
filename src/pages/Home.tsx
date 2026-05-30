@@ -278,7 +278,7 @@ export const Home: React.FC = () => {
                       <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
                       <text className="text-[7px] tracking-[0.16em] fill-current uppercase font-mono font-medium">
                         <textPath href="#circlePath" startOffset="0%">
-                          15+ Years Of Excellence• 15+ Years Of Excellence •
+                          15+ Years Of Excellence • Hecate Furniture •
                         </textPath>
                       </text>
                     </svg>
