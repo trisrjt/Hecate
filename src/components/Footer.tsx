@@ -257,7 +257,7 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Bottom Footer Copy */}
-      <div className="border-t border-white/10 bg-black/15 relative">
+      <div className="border-t border-white/10 bg-hecate-primary relative">
         {/* Animated slow loading bottom divider */}
         <motion.div 
           initial={{ scaleX: 0 }}
