@@ -49,13 +49,12 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex flex-col select-none group">
-            <span className="text-2xl font-serif font-bold text-hecate-secondary tracking-tight group-hover:text-hecate-primary transition-colors">
-              hecate
-            </span>
-            <span className="hidden sm:block text-[10px] uppercase tracking-widest text-hecate-muted -mt-1 font-medium font-sans">
-              Custom & Modular Furniture
-            </span>
+          <Link to="/" className="flex items-center select-none py-1">
+            <img 
+              src="/images/Logo%20Red%20Black.png" 
+              alt="Hecate Logo" 
+              className="h-12 md:h-14 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Menu */}

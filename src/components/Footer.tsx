@@ -30,8 +30,12 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Info */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <RouterLink to="/" className="text-2xl font-serif font-bold text-hecate-secondary tracking-tight block mb-4">
-              hecate
+            <RouterLink to="/" className="inline-block mb-4">
+              <img 
+                src="/images/Logo%20Red%20White.png" 
+                alt="Hecate Logo" 
+                className="h-12 w-auto object-contain"
+              />
             </RouterLink>
             <p className="text-white/70 text-sm leading-relaxed mb-6 font-light">
               Premium contract furniture solutions for hospitality, corporate, and residential projects. Crafted with German precision and outstanding durability.
