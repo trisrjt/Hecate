@@ -236,14 +236,14 @@ export const Home: React.FC = () => {
           ))}
         </div>
       </section>      {/* Who We Are (Welcome Section) */}
-      <section className="py-24 md:py-32 bg-hecate-ivory relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-hecate-ivory relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-12 gap-16 items-center">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-center">
             {/* Left Content Column */}
             <div className="md:col-span-5 relative">
               <ScrollReveal delay={0.1} className="relative z-10">
-                <span className="section-label mb-4 block">Who We Are</span>
-                <h2 className="section-title mb-8 leading-tight">
+                <span className="section-label mb-3 block">Who We Are</span>
+                <h2 className="section-title mb-6 leading-tight">
                   Crafting Excellence <br className="hidden lg:block" /> in Every Piece
                 </h2>
                 <Link to="/about" className="btn-outline inline-flex items-center gap-3 group">
@@ -291,9 +291,9 @@ export const Home: React.FC = () => {
               </ScrollReveal>
             </div>
             
-            <div className="md:col-span-12 mt-12 md:mt-16">
+            <div className="md:col-span-12 mt-8 md:mt-10">
               <ScrollReveal delay={0.3}>
-                <div className="relative grid md:grid-cols-2 gap-12 lg:gap-24">
+                <div className="relative grid md:grid-cols-2 gap-8 lg:gap-16">
                   {/* Elegant Animated Vertical Line */}
                   <motion.div 
                     initial={{ height: 0 }}
@@ -322,9 +322,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-16 md:py-24 bg-hecate-ivory relative overflow-hidden border-t border-hecate-muted/20">
+      <section className="py-12 md:py-16 bg-hecate-ivory relative overflow-hidden border-t border-hecate-muted/20">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex justify-between items-end mb-12 md:mb-16">
+          <div className="flex justify-between items-end mb-8 md:mb-10">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
               <h2 className="section-title">Products of the Month</h2>
@@ -336,14 +336,14 @@ export const Home: React.FC = () => {
             </ScrollReveal> */}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-16 md:gap-y-0">
+          <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10 md:gap-y-0">
             {collections.map((item, idx) => (
               <div 
                 key={idx} 
-                className={`group ${idx % 2 !== 0 ? 'md:mt-16' : 'md:mb-16'}`}
+                className={`group ${idx % 2 !== 0 ? 'md:mt-8' : 'md:mb-8'}`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
-                  <Link to={item.path} className="block overflow-hidden relative mb-8 bg-hecate-cream aspect-[4/5]">
+                  <Link to={item.path} className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/5]">
                     <motion.img
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -357,10 +357,10 @@ export const Home: React.FC = () => {
                   </Link>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-serif text-2xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
+                      <h3 className="font-serif text-2xl font-bold mb-2 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-4 line-clamp-3">
+                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-2 line-clamp-3">
                         {item.desc}
                       </p>
                     </div>
@@ -376,9 +376,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* What We Do */}
-      <section className="py-20 md:py-28 bg-hecate-ivory">
+      <section className="py-12 md:py-16 bg-hecate-ivory">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 md:mb-10">
             <ScrollReveal>
               <span className="section-label">What We Do</span>
               <h2 className="section-title">Our Furniture Services</h2>
@@ -410,9 +410,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Stats Counter Section */}
-      <section className="py-24 bg-hecate-ivory border-b border-hecate-muted/20">
+      <section className="py-12 md:py-16 bg-hecate-ivory border-b border-hecate-muted/20">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             {stats.map((stat, idx) => (
               <ScrollReveal key={idx} delay={idx * 0.1}>
                 <div className="border-l border-hecate-primary/20 pl-6">
