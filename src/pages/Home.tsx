@@ -301,70 +301,82 @@ export const Home: React.FC = () => {
           {/* Cards Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {collections.map((item, idx) => (
-              <ScrollReveal key={idx} delay={idx * 0.15}>
-                <div className="group relative bg-white border border-hecate-border rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_20px_45px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy hover:-translate-y-2 flex flex-col justify-between h-[450px]">
-                  {/* Decorative corner element */}
-                  <div className="absolute top-0 left-0 w-0 h-0 border-t-[14px] border-t-hecate-accent/40 border-r-[14px] border-r-transparent z-20 group-hover:border-t-hecate-secondary transition-colors duration-300" />
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30, x: idx % 2 === 0 ? -15 : 15 }}
+                whileInView={{ opacity: 1, y: 0, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -12, scale: 1.02 }}
+                className="group relative bg-white border border-hecate-border rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_20px_45px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy flex flex-col justify-between h-[450px]"
+              >
+                {/* Decorative corner element */}
+                <div className="absolute top-0 left-0 w-0 h-0 border-t-[14px] border-t-hecate-accent/40 border-r-[14px] border-r-transparent z-20 group-hover:border-t-hecate-secondary transition-colors duration-300" />
+                
+                {/* Image Container */}
+                <div className="relative overflow-hidden h-[240px]">
+                  <motion.img
+                    src={item.image}
+                    alt={item.title}
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full object-cover"
+                  />
                   
-                  {/* Image Container */}
-                  <div className="relative overflow-hidden h-[240px]">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-snappy"
-                    />
-                    
-                    {/* Floating Luxury Tag */}
-                    <span className="absolute top-4 left-4 z-20 bg-hecate-primary/95 backdrop-blur-md text-white text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-full font-medium border border-white/10 font-sans shadow-md">
-                      {item.tag}
+                  {/* Floating Luxury Tag */}
+                  <span className="absolute top-4 left-4 z-20 bg-hecate-primary/95 backdrop-blur-md text-white text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-full font-medium border border-white/10 font-sans shadow-md">
+                    {item.tag}
+                  </span>
+
+                  {/* Numeric Accent */}
+                  <motion.span 
+                    whileHover={{ scale: 1.12, y: -2 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-3 right-4 z-20 font-serif italic text-4xl text-white/40 drop-shadow select-none group-hover:text-hecate-accent transition-colors duration-300"
+                  >
+                    {`0${idx + 1}`}
+                  </motion.span>
+
+                  {/* Premium Dark Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-hecate-primary/90 via-hecate-primary/30 to-transparent opacity-65 group-hover:opacity-80 transition-opacity duration-500" />
+
+                  {/* Interactive Slide-up Glass Details */}
+                  <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-snappy bg-hecate-primary/75 backdrop-blur-md border-t border-white/10 flex justify-between items-center text-white z-10">
+                    <span className="text-[10px] uppercase tracking-wider text-hecate-accent font-medium font-sans">
+                      {item.feature}
                     </span>
-
-                    {/* Numeric Accent */}
-                    <span className="absolute bottom-3 right-4 z-20 font-serif italic text-4xl text-white/40 drop-shadow select-none group-hover:text-hecate-accent group-hover:scale-110 transition-all duration-500 ease-snappy">
-                      {`0${idx + 1}`}
+                    <span className="text-[10px] text-white/80 font-light">
+                      {item.stat}
                     </span>
-
-                    {/* Premium Dark Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-hecate-primary/90 via-hecate-primary/30 to-transparent opacity-65 group-hover:opacity-80 transition-opacity duration-500" />
-
-                    {/* Interactive Slide-up Glass Details */}
-                    <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-snappy bg-hecate-primary/75 backdrop-blur-md border-t border-white/10 flex justify-between items-center text-white z-10">
-                      <span className="text-[10px] uppercase tracking-wider text-hecate-accent font-medium font-sans">
-                        {item.feature}
-                      </span>
-                      <span className="text-[10px] text-white/80 font-light">
-                        {item.stat}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6 flex-1 flex flex-col justify-between relative bg-white">
-                    <div>
-                      <h3 className="font-serif text-2xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-4 line-clamp-3">
-                        {item.desc}
-                      </p>
-                    </div>
-                    
-                    {/* Animated Button Link */}
-                    <Link
-                      to={item.path}
-                      className="inline-flex items-center gap-2 group/btn font-sans text-xs uppercase tracking-widest font-semibold text-hecate-secondary hover:text-hecate-primary transition-colors duration-300 w-fit"
-                    >
-                      <span className="relative">
-                        View Collection
-                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-hecate-primary group-hover/btn:w-full transition-all duration-300 ease-out" />
-                      </span>
-                      <div className="w-6 h-6 rounded-full bg-hecate-cream group-hover/btn:bg-hecate-secondary group-hover/btn:text-white flex items-center justify-center transition-all duration-300">
-                        <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform duration-300" />
-                      </div>
-                    </Link>
                   </div>
                 </div>
-              </ScrollReveal>
+
+                {/* Card Content */}
+                <div className="p-6 flex-1 flex flex-col justify-between relative bg-white">
+                  <div>
+                    <h3 className="font-serif text-2xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p className="text-hecate-muted text-sm font-light leading-relaxed mb-4 line-clamp-3">
+                      {item.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Animated Button Link */}
+                  <Link
+                    to={item.path}
+                    className="inline-flex items-center gap-2 group/btn font-sans text-xs uppercase tracking-widest font-semibold text-hecate-secondary hover:text-hecate-primary transition-colors duration-300 w-fit"
+                  >
+                    <span className="relative">
+                      View Collection
+                      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-hecate-primary group-hover/btn:w-full transition-all duration-300 ease-out" />
+                    </span>
+                    <div className="w-6 h-6 rounded-full bg-hecate-cream group-hover/btn:bg-hecate-secondary group-hover/btn:text-white flex items-center justify-center transition-all duration-300">
+                      <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform duration-300" />
+                    </div>
+                  </Link>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -390,13 +402,26 @@ export const Home: React.FC = () => {
             </ScrollReveal>
           </div>
 
-          {/* 5 columns luxury list */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {/* 5 columns luxury list with 3D perspective space */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6" style={{ perspective: 1000 }}>
             {whatWeDo.map((item, idx) => (
-              <ScrollReveal key={idx} delay={idx * 0.12}>
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 50, rotateX: 12 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.8, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ 
+                  scale: 1.04, 
+                  rotateY: idx % 2 === 0 ? 8 : -8,
+                  rotateX: 4,
+                  y: -10 
+                }}
+                className="h-full"
+              >
                 <Link 
                   to={item.path}
-                  className="group relative block bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-[0_20px_45px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy hover:-translate-y-2 h-full border border-hecate-border/50 overflow-hidden"
+                  className="group relative block bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-[0_25px_50px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy h-full border border-hecate-border/50 overflow-hidden"
                 >
                   {/* Blueprint Grid Pattern */}
                   <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.06] transition-opacity duration-500 bg-[radial-gradient(#1a1a2e_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
@@ -406,10 +431,14 @@ export const Home: React.FC = () => {
                     {item.num}
                   </div>
 
-                  {/* Icon Wrapper inside squircle container */}
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-hecate-cream border border-hecate-border/40 flex items-center justify-center text-hecate-primary group-hover:bg-hecate-primary group-hover:text-white group-hover:scale-110 group-hover:rotate-[6deg] transition-all duration-500 ease-snappy shadow-inner">
+                  {/* Icon Wrapper inside floating squircle container */}
+                  <motion.div 
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: idx * 0.3 }}
+                    className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-hecate-cream border border-hecate-border/40 flex items-center justify-center text-hecate-primary group-hover:bg-hecate-primary group-hover:text-white group-hover:scale-110 group-hover:rotate-[6deg] transition-all duration-500 ease-snappy shadow-inner"
+                  >
                     {item.icon}
-                  </div>
+                  </motion.div>
                   
                   <h3 className="font-serif text-xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-300">
                     {item.title}
@@ -428,7 +457,7 @@ export const Home: React.FC = () => {
                   {/* Premium bottom border glow */}
                   <div className="absolute bottom-0 inset-x-0 h-[3px] w-0 bg-gradient-to-r from-hecate-accent to-hecate-secondary group-hover:w-full transition-all duration-500 ease-snappy" />
                 </Link>
-              </ScrollReveal>
+              </motion.div>
             ))}
           </div>
         </div>
