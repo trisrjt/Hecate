@@ -56,9 +56,9 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-hecate-primary text-white relative overflow-hidden shadow-[0_-15px_35px_rgba(0,0,0,0.18)]">
+    <footer className="bg-hecate-secondary text-white relative overflow-hidden shadow-[0_-15px_35px_rgba(0,0,0,0.18)]">
       {/* Top Banner Call to Action */}
-      <div className="relative border-b border-white/10">
+      <div className="relative border-b border-white/10 bg-hecate-primary">
         {/* Animated slide-in top border line */}
         <motion.div 
           initial={{ scaleX: 0 }}
