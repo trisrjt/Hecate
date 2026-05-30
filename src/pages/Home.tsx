@@ -55,52 +55,74 @@ export const Home: React.FC = () => {
       image: '/images/service-living.jpg',
       desc: 'Contemporary living room furniture designed for comfort and style.',
       path: '/services/modern-living',
+      tag: 'Best Seller',
+      stat: '12 Unique Designs',
+      feature: 'Sleek & Modular'
     },
     {
       title: 'Modern Kitchen',
       image: '/images/service-kitchen.jpg',
       desc: 'Sleek modular kitchen solutions with premium finishes.',
       path: '/services/modern-kitchen',
+      tag: 'German Hardware',
+      stat: 'Fully Custom',
+      feature: 'Soft-Close Systems'
     },
     {
       title: 'Modern Office',
       image: '/images/service-office.jpg',
       desc: 'Ergonomic workspace furniture for productive environments.',
       path: '/services/modern-office',
+      tag: 'Ergonomic Focus',
+      stat: 'Bulk & Custom Orders',
+      feature: 'Smart Wire Channels'
     },
     {
       title: 'Modern Bedroom',
       image: '/images/service-bedroom.jpg',
       desc: 'Serene bedroom furnishings for restful spaces.',
       path: '/services/modern-bedroom',
+      tag: 'Signature Care',
+      stat: 'Premium Woodwork',
+      feature: 'Integrated Lighting'
     },
   ];
 
   const whatWeDo = [
     {
       title: 'Modern Living',
-      desc: 'Contemporary designs for stylish living spaces.',
-      icon: <Sofa className="size-8" />,
+      desc: 'Contemporary designs for stylish living spaces, crafted to maximize comfort and modern layouts.',
+      icon: <Sofa className="size-8 stroke-[1.25]" />,
+      num: '01',
+      path: '/services/modern-living',
     },
     {
       title: 'Modern Office',
-      desc: 'Professional workspaces that inspire productivity.',
-      icon: <Briefcase className="size-8" />,
+      desc: 'Professional workspaces designed to inspire productivity, using ergonomic contract standards.',
+      icon: <Briefcase className="size-8 stroke-[1.25]" />,
+      num: '02',
+      path: '/services/modern-office',
     },
     {
       title: 'Modern Kitchen',
-      desc: 'Sleek and functional kitchen interiors.',
-      icon: <Flame className="size-8" />,
+      desc: 'Sleek, functional modular kitchen interiors utilizing the absolute finest German machinery.',
+      icon: <Flame className="size-8 stroke-[1.25]" />,
+      num: '03',
+      path: '/services/modern-kitchen',
     },
     {
       title: 'Modern Bedroom',
-      desc: 'Serene and elegant bedroom furnishings.',
-      icon: <Bed className="size-8" />,
+      desc: 'Serene bedroom furnishings curated to create a peaceful, elegant, and restful retreat.',
+      icon: <Bed className="size-8 stroke-[1.25]" />,
+      num: '04',
+      path: '/services/modern-bedroom',
     },
     {
       title: "Kid's & Baby Room",
-      desc: 'Playful, safe, and creative furniture for little ones.',
-      icon: <Baby className="size-8" />,
+      desc: 'Playful, safe, and highly creative furniture options tailored for the growth of your little ones.',
+      icon: <Baby className="size-8 stroke-[1.25]" />,
+      num: '05',
+      path: '/services/kids-baby-room',
     },
   ];
 
@@ -256,13 +278,21 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-20 md:py-28 bg-hecate-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-hecate-cream to-hecate-ivory relative overflow-hidden">
+        {/* Subtle decorative background blur spotlight */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-hecate-accent/5 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-hecate-secondary/5 blur-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <ScrollReveal>
-              <span className="section-label">Featured Collections</span>
-              <h2 className="section-title">Products of the Month</h2>
-              <p className="text-hecate-muted max-w-2xl mx-auto font-light">
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <div className="h-[1px] w-8 bg-hecate-accent/60" />
+                <span className="section-label uppercase tracking-[0.25em] text-xs font-semibold text-hecate-accent">Featured Collections</span>
+                <div className="h-[1px] w-8 bg-hecate-accent/60" />
+              </div>
+              <h2 className="section-title text-4xl md:text-5xl font-bold tracking-tight">Products of the Month</h2>
+              <p className="text-hecate-muted max-w-2xl mx-auto font-light leading-relaxed mt-4">
                 Discover our exclusive range of modern furniture. Each collection is thoughtfully designed to bring sophistication and functionality to your space.
               </p>
             </ScrollReveal>
@@ -271,28 +301,66 @@ export const Home: React.FC = () => {
           {/* Cards Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {collections.map((item, idx) => (
-              <ScrollReveal key={idx} delay={idx * 0.1}>
-                <div className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="overflow-hidden h-56 relative">
+              <ScrollReveal key={idx} delay={idx * 0.15}>
+                <div className="group relative bg-white border border-hecate-border rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_20px_45px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy hover:-translate-y-2 flex flex-col justify-between h-[450px]">
+                  {/* Decorative corner element */}
+                  <div className="absolute top-0 left-0 w-0 h-0 border-t-[14px] border-t-hecate-accent/40 border-r-[14px] border-r-transparent z-20 group-hover:border-t-hecate-secondary transition-colors duration-300" />
+                  
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden h-[240px]">
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-snappy"
                     />
+                    
+                    {/* Floating Luxury Tag */}
+                    <span className="absolute top-4 left-4 z-20 bg-hecate-primary/95 backdrop-blur-md text-white text-[9px] uppercase tracking-widest px-3 py-1.5 rounded-full font-medium border border-white/10 font-sans shadow-md">
+                      {item.tag}
+                    </span>
+
+                    {/* Numeric Accent */}
+                    <span className="absolute bottom-3 right-4 z-20 font-serif italic text-4xl text-white/40 drop-shadow select-none group-hover:text-hecate-accent group-hover:scale-110 transition-all duration-500 ease-snappy">
+                      {`0${idx + 1}`}
+                    </span>
+
+                    {/* Premium Dark Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-hecate-primary/90 via-hecate-primary/30 to-transparent opacity-65 group-hover:opacity-80 transition-opacity duration-500" />
+
+                    {/* Interactive Slide-up Glass Details */}
+                    <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-snappy bg-hecate-primary/75 backdrop-blur-md border-t border-white/10 flex justify-between items-center text-white z-10">
+                      <span className="text-[10px] uppercase tracking-wider text-hecate-accent font-medium font-sans">
+                        {item.feature}
+                      </span>
+                      <span className="text-[10px] text-white/80 font-light">
+                        {item.stat}
+                      </span>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-serif text-xl font-semibold mb-2 text-hecate-primary">
-                      {item.title}
-                    </h3>
-                    <p className="text-hecate-muted text-sm mb-4 font-light leading-relaxed h-12 overflow-hidden">
-                      {item.desc}
-                    </p>
+
+                  {/* Card Content */}
+                  <div className="p-6 flex-1 flex flex-col justify-between relative bg-white">
+                    <div>
+                      <h3 className="font-serif text-2xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-4 line-clamp-3">
+                        {item.desc}
+                      </p>
+                    </div>
+                    
+                    {/* Animated Button Link */}
                     <Link
                       to={item.path}
-                      className="text-hecate-secondary font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all"
+                      className="inline-flex items-center gap-2 group/btn font-sans text-xs uppercase tracking-widest font-semibold text-hecate-secondary hover:text-hecate-primary transition-colors duration-300 w-fit"
                     >
-                      <span>View Collection</span>
-                      <ArrowRight size={14} />
+                      <span className="relative">
+                        View Collection
+                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-hecate-primary group-hover/btn:w-full transition-all duration-300 ease-out" />
+                      </span>
+                      <div className="w-6 h-6 rounded-full bg-hecate-cream group-hover/btn:bg-hecate-secondary group-hover/btn:text-white flex items-center justify-center transition-all duration-300">
+                        <ArrowRight size={10} className="group-hover/btn:translate-x-0.5 transition-transform duration-300" />
+                      </div>
                     </Link>
                   </div>
                 </div>
@@ -303,33 +371,63 @@ export const Home: React.FC = () => {
       </section>
 
       {/* What We Do */}
-      <section className="py-20 md:py-28 bg-hecate-ivory">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-28 bg-hecate-ivory relative overflow-hidden">
+        {/* Soft golden spotlight */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-hecate-accent/3 blur-3xl pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <ScrollReveal>
-              <span className="section-label">What We Do</span>
-              <h2 className="section-title">Our Furniture Services</h2>
-              <p className="text-hecate-muted max-w-2xl mx-auto font-light">
-                We deliver contemporary furniture solutions crafted for today's lifestyles, from modern living to kids' rooms.
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <div className="h-[1px] w-8 bg-hecate-accent/60" />
+                <span className="section-label uppercase tracking-[0.25em] text-xs font-semibold text-hecate-accent">What We Do</span>
+                <div className="h-[1px] w-8 bg-hecate-accent/60" />
+              </div>
+              <h2 className="section-title text-4xl md:text-5xl font-bold tracking-tight">Our Furniture Services</h2>
+              <p className="text-hecate-muted max-w-2xl mx-auto font-light leading-relaxed mt-4">
+                We deliver contemporary furniture solutions crafted for today's lifestyles, designed with precision engineering and timeless aesthetic appeal.
               </p>
             </ScrollReveal>
           </div>
 
-          {/* 5 columns responsive list */}
+          {/* 5 columns luxury list */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {whatWeDo.map((item, idx) => (
-              <ScrollReveal key={idx} delay={idx * 0.1}>
-                <div className="group bg-white rounded-lg p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full border border-hecate-border/50">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-hecate-cream flex items-center justify-center text-hecate-secondary group-hover:bg-hecate-secondary group-hover:text-white transition-colors duration-300">
+              <ScrollReveal key={idx} delay={idx * 0.12}>
+                <Link 
+                  to={item.path}
+                  className="group relative block bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-[0_20px_45px_rgba(26,26,46,0.08)] transition-all duration-500 ease-snappy hover:-translate-y-2 h-full border border-hecate-border/50 overflow-hidden"
+                >
+                  {/* Blueprint Grid Pattern */}
+                  <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.06] transition-opacity duration-500 bg-[radial-gradient(#1a1a2e_1px,transparent_1px)] [background-size:12px_12px] pointer-events-none" />
+                  
+                  {/* Small geometric numbering */}
+                  <div className="absolute top-4 left-4 font-mono text-[10px] tracking-widest text-hecate-muted/50 group-hover:text-hecate-secondary transition-colors duration-300 font-bold border border-hecate-border/40 group-hover:border-hecate-secondary/30 px-2 py-0.5 rounded">
+                    {item.num}
+                  </div>
+
+                  {/* Icon Wrapper inside squircle container */}
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-hecate-cream border border-hecate-border/40 flex items-center justify-center text-hecate-primary group-hover:bg-hecate-primary group-hover:text-white group-hover:scale-110 group-hover:rotate-[6deg] transition-all duration-500 ease-snappy shadow-inner">
                     {item.icon}
                   </div>
-                  <h3 className="font-serif text-lg font-semibold mb-2 text-hecate-primary">
+                  
+                  <h3 className="font-serif text-xl font-bold mb-3 text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-hecate-muted text-xs leading-relaxed font-light">
+                  
+                  <p className="text-hecate-muted text-xs leading-relaxed font-light mb-6">
                     {item.desc}
                   </p>
-                </div>
+
+                  {/* Discover Link overlay */}
+                  <div className="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest font-semibold text-hecate-accent group-hover:text-hecate-secondary transition-colors duration-300">
+                    <span>Discover More</span>
+                    <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+
+                  {/* Premium bottom border glow */}
+                  <div className="absolute bottom-0 inset-x-0 h-[3px] w-0 bg-gradient-to-r from-hecate-accent to-hecate-secondary group-hover:w-full transition-all duration-500 ease-snappy" />
+                </Link>
               </ScrollReveal>
             ))}
           </div>
