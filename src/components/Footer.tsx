@@ -117,7 +117,7 @@ export const Footer: React.FC = () => {
                 transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                 src="/images/Logo White.png" 
                 alt="Hecate Logo" 
-                className="h-10 w-auto object-contain"
+                className="h-16 md:h-20 w-auto object-contain"
               />
             </RouterLink>
             <p className="text-white/75 text-sm leading-relaxed mb-4 font-light max-w-md">

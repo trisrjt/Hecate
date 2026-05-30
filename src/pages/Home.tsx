@@ -278,7 +278,7 @@ export const Home: React.FC = () => {
                       <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
                       <text className="text-[7px] tracking-[0.16em] fill-current uppercase font-mono font-medium">
                         <textPath href="#circlePath" startOffset="0%">
-                          Premium Contract Furniture • Hecate Signature •
+                          15+ Years Of Excellence• 15+ Years Of Excellence •
                         </textPath>
                       </text>
                     </svg>
@@ -327,7 +327,7 @@ export const Home: React.FC = () => {
           <div className="flex justify-between items-end mb-8 md:mb-10">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
-              <h2 className="section-title">Products of the Month</h2>
+              <h2 className="section-title">Projects of the Month</h2>
             </ScrollReveal>
             {/* <ScrollReveal delay={0.2} className="hidden md:block pb-2">
                <Link to="/products" className="btn-outline text-sm">
