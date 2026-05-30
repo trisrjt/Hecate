@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sofa, Briefcase, Flame, Bed, Baby } from 'lucide-react';
-import { motion, useInView, animate, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, animate } from 'framer-motion';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { CTABanner } from '../components/CTABanner';
 import { SEO } from '../components/SEO';
@@ -43,14 +43,6 @@ const AnimatedCounter: React.FC<{ value: string }> = ({ value }) => {
 
 export const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // Ref and scroll progress for the services timeline animation
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: servicesRef,
-    offset: ["start 70%", "end center"]
-  });
-  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const slides: HeroSlide[] = [
     {
@@ -384,160 +376,35 @@ export const Home: React.FC = () => {
       </section>
 
       {/* What We Do */}
-      <section className="py-24 md:py-32 bg-hecate-ivory text-hecate-primary overflow-hidden relative border-t border-b border-hecate-muted/10">
-        {/* Subtle, soft ambient radial glows (volumetric lighting depth for light theme) */}
-        <div className="absolute top-1/6 left-[10%] w-[450px] h-[450px] rounded-full bg-hecate-secondary/[0.02] blur-[140px] pointer-events-none z-0 select-none" />
-        <div className="absolute bottom-1/6 right-[10%] w-[450px] h-[450px] rounded-full bg-hecate-accent/[0.02] blur-[140px] pointer-events-none z-0 select-none" />
-
-        {/* Elegant typography brand watermarks vertically floating in the background */}
-        <div 
-          style={{ writingMode: 'vertical-rl' }}
-          className="absolute left-6 top-1/2 -translate-y-1/2 text-7xl md:text-8xl lg:text-[8rem] font-serif font-bold text-hecate-primary/[0.055] select-none pointer-events-none tracking-[0.2em] uppercase hidden xl:block z-0"
-        >
-          Hecate
-        </div>
-        <div 
-          style={{ writingMode: 'vertical-rl' }}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-7xl md:text-8xl lg:text-[8rem] font-serif font-bold text-hecate-primary/[0.055] select-none pointer-events-none tracking-[0.2em] uppercase hidden xl:block z-0"
-        >
-          Signature
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="mb-20 md:mb-28 text-center">
+      <section className="py-20 md:py-28 bg-hecate-ivory">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
             <ScrollReveal>
-              <span className="section-label text-hecate-accent mb-4 block">What We Do</span>
-              <h2 className="section-title text-hecate-primary" style={{ textShadow: '0 2px 8px rgba(26,26,46,0.04)' }}>Our Furniture Services</h2>
+              <span className="section-label">What We Do</span>
+              <h2 className="section-title">Our Furniture Services</h2>
+              <p className="text-hecate-muted max-w-2xl mx-auto font-light">
+                We deliver contemporary furniture solutions crafted for today's lifestyles, from modern living to kids' rooms.
+              </p>
             </ScrollReveal>
           </div>
 
-          <div ref={servicesRef} className="relative">
-            {/* Central Vertical Timeline Line (Desktop Only) */}
-            <div className="hidden md:block absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[1px] z-10">
-              {/* Subtle background track */}
-              <div className="absolute inset-0 bg-hecate-primary/10" />
-              {/* Dynamic scroll-drawn line linked to scroll progress */}
-              <motion.div 
-                style={{ scaleY }}
-                className="absolute inset-0 bg-hecate-secondary origin-top shadow-[0_0_8px_#c41e3a]"
-              />
-            </div>
-
-            {/* Alternating Timeline Steps Container */}
-            <div className="space-y-16 md:space-y-24">
-              {whatWeDo.map((item, idx) => {
-                const isEven = idx % 2 === 0;
-                return (
-                  <div key={idx} className="group relative grid md:grid-cols-12 gap-8 md:gap-0 items-center">
-                    {/* Central Glass Node Circle (Desktop Only) */}
-                    <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                      <motion.div 
-                        whileHover={{ scale: 1.15 }}
-                        className="w-14 h-14 rounded-full bg-white text-hecate-primary border border-hecate-primary/10 flex items-center justify-center shadow-[0_4px_20px_rgba(26,26,46,0.06)] group-hover:bg-hecate-secondary group-hover:border-white/30 transition-all duration-500 hover:shadow-[0_0_15px_rgba(196,30,58,0.3)]"
-                      >
-                        <motion.div 
-                          whileHover={{ rotate: 15 }}
-                          className="text-hecate-primary group-hover:text-white transition-colors duration-500"
-                        >
-                          {item.icon}
-                        </motion.div>
-                      </motion.div>
-                    </div>
-
-                    {/* Left Column Text (Even Indexes) */}
-                    <div className={`md:col-span-5 ${isEven ? 'md:col-start-1 md:col-span-5' : 'hidden md:block'}`}>
-                      {isEven && (
-                        <ScrollReveal delay={0.1}>
-                          <Link 
-                            to={item.path} 
-                            className="block relative p-6 md:p-8 bg-white/60 backdrop-blur-md rounded-2xl border border-hecate-primary/[0.04] shadow-[0_8px_30px_rgba(26,26,46,0.03)] hover:shadow-[0_20px_40px_rgba(26,26,46,0.06)] hover:border-hecate-accent/20 hover:bg-white transition-all duration-500 group-hover:-translate-y-1 max-w-lg md:ml-auto text-left"
-                          >
-                            {/* Giant beautiful background watermark number inside card */}
-                            <div className="absolute top-4 right-6 text-6xl md:text-7xl font-serif font-bold text-hecate-primary/[0.015] select-none pointer-events-none group-hover:text-hecate-accent/[0.03] transition-colors duration-500">
-                              {item.num}
-                            </div>
-                            <span className="text-xs uppercase tracking-[0.2em] text-hecate-accent font-semibold mb-2 block">
-                              Service {item.num}
-                            </span>
-                            <h3 className="text-xl md:text-2xl font-serif font-bold text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-500 mb-3" style={{ textShadow: '0 1px 2px rgba(26,26,46,0.03)' }}>
-                              {item.title}
-                            </h3>
-                            <p className="text-hecate-muted font-light text-sm md:text-base leading-relaxed mb-5 group-hover:text-hecate-text transition-colors duration-500">
-                              {item.desc}
-                            </p>
-                            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-hecate-primary/10 pb-0.5 text-hecate-muted group-hover:text-hecate-secondary group-hover:border-hecate-secondary transition-all duration-300">
-                              <span>Explore Service</span>
-                              <ArrowRight size={12} className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
-                            </div>
-                          </Link>
-                        </ScrollReveal>
-                      )}
-                    </div>
-
-                    {/* Spacer Column (Desktop Only) */}
-                    <div className="hidden md:block md:col-span-2" />
-
-                    {/* Right Column Text (Odd Indexes) */}
-                    <div className={`md:col-span-5 ${!isEven ? 'md:col-start-8 md:col-span-5' : 'hidden md:block'}`}>
-                      {!isEven && (
-                        <ScrollReveal delay={0.1}>
-                          <Link 
-                            to={item.path} 
-                            className="block relative p-6 md:p-8 bg-white/60 backdrop-blur-md rounded-2xl border border-hecate-primary/[0.04] shadow-[0_8px_30px_rgba(26,26,46,0.03)] hover:shadow-[0_20px_40px_rgba(26,26,46,0.06)] hover:border-hecate-accent/20 hover:bg-white transition-all duration-500 group-hover:-translate-y-1 max-w-lg text-left"
-                          >
-                            {/* Giant beautiful background watermark number inside card */}
-                            <div className="absolute top-4 right-6 text-6xl md:text-7xl font-serif font-bold text-hecate-primary/[0.015] select-none pointer-events-none group-hover:text-hecate-accent/[0.03] transition-colors duration-500">
-                              {item.num}
-                            </div>
-                            <span className="text-xs uppercase tracking-[0.2em] text-hecate-accent font-semibold mb-2 block">
-                              Service {item.num}
-                            </span>
-                            <h3 className="text-xl md:text-2xl font-serif font-bold text-hecate-primary group-hover:text-hecate-secondary transition-colors duration-500 mb-3" style={{ textShadow: '0 1px 2px rgba(26,26,46,0.03)' }}>
-                              {item.title}
-                            </h3>
-                            <p className="text-hecate-muted font-light text-sm md:text-base leading-relaxed mb-5 group-hover:text-hecate-text transition-colors duration-500">
-                              {item.desc}
-                            </p>
-                            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-hecate-primary/10 pb-0.5 text-hecate-muted group-hover:text-hecate-secondary group-hover:border-hecate-secondary transition-all duration-300">
-                              <span>Explore Service</span>
-                              <ArrowRight size={12} className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
-                            </div>
-                          </Link>
-                        </ScrollReveal>
-                      )}
-                    </div>
-
-                    {/* Responsive Mobile Layout (Visible only on mobile screen widths) */}
-                    <div className="md:hidden col-span-12 pl-12 relative border-l border-hecate-primary/10 ml-4 py-2">
-                      {/* Floating Mobile Glass Node */}
-                      <div className="absolute -left-6 top-2 w-12 h-12 rounded-full bg-white border border-hecate-primary/10 flex items-center justify-center text-hecate-accent shadow-md shadow-black/[0.02]">
-                        {item.icon}
-                      </div>
-                      <ScrollReveal>
-                        <Link 
-                          to={item.path} 
-                          className="block relative p-5 bg-white/60 backdrop-blur-md rounded-xl border border-hecate-primary/[0.03] shadow-[0_6px_20px_rgba(26,26,46,0.02)]"
-                        >
-                          <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-accent font-semibold mb-1 block">
-                            Service {item.num}
-                          </span>
-                          <h3 className="text-lg font-serif font-bold text-hecate-primary mb-2" style={{ textShadow: '0 1px 2px rgba(26,26,46,0.03)' }}>
-                            {item.title}
-                          </h3>
-                          <p className="text-hecate-muted font-light text-xs leading-relaxed mb-4">
-                            {item.desc}
-                          </p>
-                          <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] border-b border-hecate-primary/10 pb-0.5 text-hecate-muted">
-                            <span>Explore Service</span>
-                            <ArrowRight size={10} className="-rotate-45" />
-                          </div>
-                        </Link>
-                      </ScrollReveal>
-                    </div>
+          {/* 5 columns responsive list */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {whatWeDo.map((item, idx) => (
+              <ScrollReveal key={idx} delay={idx * 0.1}>
+                <div className="group bg-white rounded-lg p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full border border-hecate-border/50">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-hecate-cream flex items-center justify-center text-hecate-secondary group-hover:bg-hecate-secondary group-hover:text-white transition-colors duration-300">
+                    {item.icon}
                   </div>
-                );
-              })}
-            </div>
+                  <h3 className="font-serif text-lg font-semibold mb-2 text-hecate-primary">
+                    {item.title}
+                  </h3>
+                  <p className="text-hecate-muted text-xs leading-relaxed font-light">
+                    {item.desc}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
