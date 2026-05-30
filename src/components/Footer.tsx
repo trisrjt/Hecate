@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-hecate-secondary text-white relative overflow-hidden shadow-[0_-15px_35px_rgba(0,0,0,0.18)]">
+    <footer className="bg-hecate-primary text-white relative overflow-hidden shadow-[0_-15px_35px_rgba(0,0,0,0.18)]">
       {/* Top Banner Call to Action */}
       <div className="relative border-b border-white/10">
         {/* Animated slide-in top border line */}
@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
             >
               <RouterLink
                 to="/contact"
-                className="btn-primary bg-white text-hecate-secondary whitespace-nowrap hover:bg-hecate-primary hover:text-white transition-all duration-300 px-8 py-3.5 rounded-full font-medium inline-block shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.45)]"
+                className="btn-primary bg-white text-hecate-primary whitespace-nowrap hover:bg-hecate-secondary hover:text-white transition-all duration-300 px-8 py-3.5 rounded-full font-medium inline-block shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.45)]"
               >
                 Let's Discuss
               </RouterLink>
