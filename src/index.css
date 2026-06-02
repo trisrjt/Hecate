@@ -62,3 +62,11 @@
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(196, 30, 58, 0.4);
 }
+
+/* Bulletproof Google Font "Encode Sans" overrides */
+.font-serif,
+.font-sans,
+h1, h2, h3, h4, h5, h6,
+.section-title {
+  font-family: 'Encode Sans', sans-serif !important;
+}
