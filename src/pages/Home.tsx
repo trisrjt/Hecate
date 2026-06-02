@@ -287,31 +287,26 @@ export const Home: React.FC = () => {
 
       {/* Featured Collections */}
       <section className="py-12 md:py-16 bg-hecate-ivory relative overflow-hidden border-t border-hecate-muted/20">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="max-w-5xl mx-auto px-6">
           <div className="flex justify-between items-end mb-8 md:mb-10">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
               <h2 className="section-title">Projects of the Month</h2>
             </ScrollReveal>
-            {/* <ScrollReveal delay={0.2} className="hidden md:block pb-2">
-               <Link to="/products" className="btn-outline text-sm">
-                  View All Products
-               </Link>
-            </ScrollReveal> */}
           </div>
 
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-12 md:gap-y-0">
+          <div className="grid md:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-12 md:gap-y-0">
             {projects.slice(0, 4).map((item, idx) => (
               <div 
                 key={idx} 
-                className={`group w-full max-w-[460px] md:mx-auto ${
+                className={`group w-full max-w-[460px] mx-auto ${
                   idx % 2 !== 0 
-                    ? 'md:mt-12' 
-                    : 'md:mb-12'
+                    ? 'md:mt-12 md:mr-0 md:ml-auto' 
+                    : 'md:mb-12 md:ml-0 md:mr-auto'
                 }`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
-                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/3]">
+                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[3/2]">
                     <motion.img
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
