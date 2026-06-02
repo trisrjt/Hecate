@@ -327,7 +327,7 @@ export const Home: React.FC = () => {
                         {item.desc}
                       </p>
                     </div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-accent font-semibold pt-2.5 whitespace-nowrap">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-secondary font-semibold pt-2.5 whitespace-nowrap">
                       {item.category}
                     </span>
                   </div>

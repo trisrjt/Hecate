@@ -250,7 +250,7 @@ export const Projects: React.FC = () => {
                     <h3 className="font-serif text-lg font-semibold mb-1 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-hecate-accent text-xs font-medium uppercase tracking-wide mb-3 font-sans">
+                    <p className="text-hecate-secondary text-xs font-medium uppercase tracking-wide mb-3 font-sans">
                       {project.location}
                     </p>
                     <p className="text-hecate-muted text-xs leading-relaxed line-clamp-2 font-light">
@@ -328,7 +328,7 @@ export const Projects: React.FC = () => {
                   <h3 className="font-serif text-xl md:text-2xl font-bold text-hecate-primary leading-tight">
                     {selectedProject.title}
                   </h3>
-                  <p className="text-xs uppercase tracking-wide text-hecate-accent font-medium mt-1">
+                  <p className="text-xs uppercase tracking-wide text-hecate-secondary font-medium mt-1">
                     {selectedProject.location}
                   </p>
                 </div>

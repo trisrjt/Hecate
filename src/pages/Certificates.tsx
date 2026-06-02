@@ -115,7 +115,7 @@ export const Certificates: React.FC = () => {
                       <h3 className="font-serif text-lg font-semibold mb-1 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
                         {cert.title}
                       </h3>
-                      <p className="text-hecate-accent text-[11px] font-medium uppercase tracking-wide mb-3 font-sans">
+                      <p className="text-hecate-secondary text-[11px] font-medium uppercase tracking-wide mb-3 font-sans">
                         {cert.subtitle}
                       </p>
                       <p className="text-hecate-muted text-xs leading-relaxed font-light">
