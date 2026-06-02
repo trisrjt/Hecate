@@ -300,14 +300,14 @@ export const Home: React.FC = () => {
             </ScrollReveal> */}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-16 md:gap-y-0">
+          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-12 md:gap-y-0">
             {projects.slice(0, 4).map((item, idx) => (
               <div 
                 key={idx} 
-                className={`group w-full max-w-[420px] ${
+                className={`group w-full max-w-[460px] md:mx-auto ${
                   idx % 2 !== 0 
-                    ? 'md:mt-16 md:ml-auto' 
-                    : 'md:mb-16 md:mr-auto'
+                    ? 'md:mt-12' 
+                    : 'md:mb-12'
                 }`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
