@@ -5,6 +5,7 @@ import { motion, useInView, animate } from 'framer-motion';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { CTABanner } from '../components/CTABanner';
 import { SEO } from '../components/SEO';
+import { projects } from './Projects';
 
 interface HeroSlide {
   image: string;
@@ -70,44 +71,7 @@ export const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const collections = [
-    {
-      title: 'Modern Living',
-      image: '/images/service-living.jpg',
-      desc: 'Contemporary living room furniture designed for comfort and style.',
-      path: '/services/modern-living',
-      tag: 'Best Seller',
-      stat: '12 Unique Designs',
-      feature: 'Sleek & Modular'
-    },
-    {
-      title: 'Modern Kitchen',
-      image: '/images/service-kitchen.jpg',
-      desc: 'Sleek modular kitchen solutions with premium finishes.',
-      path: '/services/modern-kitchen',
-      tag: 'German Hardware',
-      stat: 'Fully Custom',
-      feature: 'Soft-Close Systems'
-    },
-    {
-      title: 'Modern Office',
-      image: '/images/service-office.jpg',
-      desc: 'Ergonomic workspace furniture for productive environments.',
-      path: '/services/modern-office',
-      tag: 'Ergonomic Focus',
-      stat: 'Bulk & Custom Orders',
-      feature: 'Smart Wire Channels'
-    },
-    {
-      title: 'Modern Bedroom',
-      image: '/images/service-bedroom.jpg',
-      desc: 'Serene bedroom furnishings for restful spaces.',
-      path: '/services/modern-bedroom',
-      tag: 'Signature Care',
-      stat: 'Premium Woodwork',
-      feature: 'Integrated Lighting'
-    },
-  ];
+
 
   const whatWeDo = [
     {
@@ -337,13 +301,13 @@ export const Home: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10 md:gap-y-0">
-            {collections.map((item, idx) => (
+            {projects.slice(0, 4).map((item, idx) => (
               <div 
                 key={idx} 
                 className={`group ${idx % 2 !== 0 ? 'md:mt-8' : 'md:mb-8'}`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
-                  <Link to={item.path} className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/5]">
+                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/5]">
                     <motion.img
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -365,7 +329,7 @@ export const Home: React.FC = () => {
                       </p>
                     </div>
                     <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-accent font-semibold pt-2">
-                      {item.tag}
+                      {item.category}
                     </span>
                   </div>
                 </ScrollReveal>

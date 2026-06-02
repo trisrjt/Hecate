@@ -6,7 +6,7 @@ import { ScrollReveal } from '../components/ScrollReveal';
 import { PageHeader } from '../components/PageHeader';
 import { SEO } from '../components/SEO';
 
-interface Project {
+export interface Project {
   title: string;
   location: string;
   category: 'Corporate' | 'Co-working' | 'Hospitality' | 'Residential';
@@ -15,12 +15,7 @@ interface Project {
   gallery: string[];
 }
 
-export const Projects: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Corporate' | 'Co-working' | 'Hospitality' | 'Residential'>('All');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
-
-  const projects: Project[] = [
+export const projects: Project[] = [
     {
       title: 'Collab Deck Co-Working Space',
       location: 'Rawdon Street, Kolkata',
@@ -94,6 +89,11 @@ export const Projects: React.FC = () => {
       ],
     },
   ];
+
+export const Projects: React.FC = () => {
+  const [activeFilter, setActiveFilter] = useState<'All' | 'Corporate' | 'Co-working' | 'Hospitality' | 'Residential'>('All');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
 
   const certificates = [
     {
