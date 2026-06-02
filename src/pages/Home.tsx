@@ -300,13 +300,10 @@ export const Home: React.FC = () => {
             </ScrollReveal> */}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-10 md:gap-y-0">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {projects.slice(0, 4).map((item, idx) => (
-              <div 
-                key={idx} 
-                className={`group ${idx % 2 !== 0 ? 'md:mt-8' : 'md:mb-8'}`}
-              >
-                <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
+              <div key={idx} className="group">
+                <ScrollReveal delay={idx * 0.1} duration={1.2} yOffset={15}>
                   <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/5]">
                     <motion.img
                       whileHover={{ scale: 1.05 }}
@@ -315,22 +312,20 @@ export const Home: React.FC = () => {
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-6 left-6 text-xs font-mono tracking-widest text-hecate-primary bg-white/90 px-3 py-1 font-medium">
+                    <div className="absolute top-4 left-4 text-xs font-mono tracking-widest text-hecate-primary bg-white/90 px-2.5 py-0.5 font-medium">
                       {`0${idx + 1}`}
                     </div>
                   </Link>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-serif text-2xl font-bold mb-2 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-2 line-clamp-3">
-                        {item.desc}
-                      </p>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-accent font-semibold pt-2">
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-accent font-semibold">
                       {item.category}
                     </span>
+                    <h3 className="font-serif text-lg font-bold text-hecate-primary group-hover:text-hecate-secondary transition-colors line-clamp-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-hecate-muted text-xs font-light leading-relaxed line-clamp-2">
+                      {item.desc}
+                    </p>
                   </div>
                 </ScrollReveal>
               </div>
