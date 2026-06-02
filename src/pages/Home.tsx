@@ -47,17 +47,17 @@ export const Home: React.FC = () => {
 
   const slides: HeroSlide[] = [
     {
-      image: '/images/hero-1.jpg',
+      image: '/images/hero-2.jpg',
       title: 'Redefining Spaces with Modern Elegance',
       subtitle: 'Premium contract furniture solutions for modern workplaces and homes',
     },
     {
-      image: '/images/hero-2.jpg',
+      image: '/images/hero-3.jpg',
       title: 'Innovate Your Space, Inspire Your Life',
       subtitle: 'Bespoke furniture crafted for hospitality, corporate, and residential projects',
     },
     {
-      image: '/images/hero-3.jpg',
+      image: '/images/hero-1.jpg',
       title: 'Crafting Modern Comfort for Every Space',
       subtitle: 'From concept to installation — bulk orders, custom designs, exceptional quality',
     },
