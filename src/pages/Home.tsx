@@ -287,7 +287,7 @@ export const Home: React.FC = () => {
 
       {/* Featured Collections */}
       <section className="py-12 md:py-16 bg-hecate-ivory relative overflow-hidden border-t border-hecate-muted/20">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex justify-between items-end mb-8 md:mb-10">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
@@ -295,14 +295,14 @@ export const Home: React.FC = () => {
             </ScrollReveal>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-12 md:gap-y-0">
+          <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-12 md:gap-y-0">
             {projects.slice(0, 4).map((item, idx) => (
               <div 
                 key={idx} 
-                className={`group w-full max-w-[460px] mx-auto ${
+                className={`group w-full ${
                   idx % 2 !== 0 
-                    ? 'md:mt-12 md:mr-0 md:ml-auto' 
-                    : 'md:mb-12 md:ml-0 md:mr-auto'
+                    ? 'md:mt-12' 
+                    : 'md:mb-12'
                 }`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
