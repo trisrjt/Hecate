@@ -19,8 +19,8 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Encode Sans', 'sans-serif'],
+        sans: ['Encode Sans', 'sans-serif'],
       },
       transitionTimingFunction: {
         'snappy': 'cubic-bezier(0.16, 1, 0.3, 1)',

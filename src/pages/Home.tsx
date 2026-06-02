@@ -311,7 +311,7 @@ export const Home: React.FC = () => {
                 }`}
               >
                 <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
-                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/5]">
+                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[4/3]">
                     <motion.img
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
