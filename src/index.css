@@ -24,7 +24,7 @@
 
 @layer components {
   .section-label {
-    @apply mb-3 text-xs font-medium uppercase tracking-[0.15em] text-hecate-accent block;
+    @apply mb-3 text-xs font-medium uppercase tracking-[0.15em] text-hecate-secondary block;
   }
 
   .section-title {
