@@ -286,53 +286,48 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-12 md:py-16 bg-hecate-ivory relative overflow-hidden border-t border-hecate-muted/20">
+      <section className="py-20 md:py-28 bg-hecate-primary relative overflow-hidden border-t border-hecate-muted/20">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex justify-between items-end mb-8 md:mb-10">
+          <div className="text-center mb-16">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
-              <h2 className="section-title">Projects of the Month</h2>
+              <h2 className="section-title text-white">Projects of the Month</h2>
             </ScrollReveal>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-12 md:gap-y-0">
-            {projects.slice(0, 4).map((item, idx) => (
-              <div 
-                key={idx} 
-                className={`group w-full ${
-                  idx % 2 !== 0 
-                    ? 'md:mt-12' 
-                    : 'md:mb-12'
-                }`}
-              >
-                <ScrollReveal delay={idx * 0.15} duration={1.5} yOffset={25}>
-                  <Link to="/projects" className="block overflow-hidden relative mb-4 bg-hecate-cream aspect-[3/2]">
-                    <motion.img
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.slice(0, 6).map((item, idx) => (
+              <ScrollReveal key={idx} delay={idx * 0.1} duration={1.2} yOffset={20}>
+                <Link 
+                  to="/projects"
+                  className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-hecate-border/50 text-left block"
+                >
+                  <div className="overflow-hidden relative h-56">
+                    <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-6 left-6 text-xs font-mono tracking-widest text-hecate-primary bg-white/90 px-3 py-1 font-medium">
-                      {`0${idx + 1}`}
+                    {/* Category Label Overlay */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-white/90 backdrop-blur-sm text-hecate-text text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm font-sans">
+                        {item.category}
+                      </span>
                     </div>
-                  </Link>
-                  <div className="flex justify-between items-start gap-4">
-                    <div className="max-w-[75%]">
-                      <h3 className="font-serif text-2xl font-bold mb-2 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-hecate-muted text-sm font-light leading-relaxed mb-2 line-clamp-3">
-                        {item.desc}
-                      </p>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-hecate-secondary font-semibold pt-2.5 whitespace-nowrap">
-                      {item.category}
-                    </span>
                   </div>
-                </ScrollReveal>
-              </div>
+                  <div className="p-6">
+                    <h3 className="font-serif text-lg font-semibold mb-1 text-hecate-primary group-hover:text-hecate-secondary transition-colors line-clamp-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-hecate-secondary text-xs font-medium uppercase tracking-wide mb-3 font-sans">
+                      {item.location}
+                    </p>
+                    <p className="text-hecate-muted text-xs leading-relaxed line-clamp-2 font-light">
+                      {item.desc}
+                    </p>
+                  </div>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>
