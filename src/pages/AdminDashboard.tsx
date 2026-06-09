@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { defaultSEOSettings, loadSEOSettings, saveSEOSettings } from '../components/SEO';
 import type { SEOData } from '../components/SEO';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { Search, Save, RotateCcw, Trash2, Mail, Phone, Calendar, ClipboardList, Settings, LogOut, CheckCircle } from 'lucide-react';
+import { Search, Save, RotateCcw, Trash2, Mail, Phone, Calendar, ClipboardList, Settings, LogOut, CheckCircle, BookOpen, Plus, Edit } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { defaultBlogs } from '../data/defaultBlogs';
+import type { BlogPostItem } from '../data/defaultBlogs';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -21,8 +23,10 @@ interface Inquiry {
   date: string;
 }
 
+const isUUID = (id: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
-  const [activeTab, setActiveTab] = useState<'seo' | 'inquiries'>('seo');
+  const [activeTab, setActiveTab] = useState<'seo' | 'inquiries' | 'blogs'>('seo');
   
   // SEO state
   const [seoSettings, setSeoSettings] = useState<Record<string, SEOData>>({});
@@ -42,6 +46,25 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
   // Inquiries state
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Blogs state
+  const [blogs, setBlogs] = useState<BlogPostItem[]>([]);
+  const [blogSearchQuery, setBlogSearchQuery] = useState('');
+  const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
+  const [editingBlog, setEditingBlog] = useState<BlogPostItem | null>(null);
+  const [imageInputMode, setImageInputMode] = useState<'url' | 'upload'>('url');
+  
+  // Blog form state
+  const [blogForm, setBlogForm] = useState<Omit<BlogPostItem, 'id' | 'published_at'>>({
+    title: '',
+    slug: '',
+    category: 'Modular Kitchen',
+    author: 'Hecate Team',
+    read_time: '5 min read',
+    excerpt: '',
+    content: '',
+    image: '/images/service-kitchen.jpg',
+  });
   
   // Feedback states
   const [toastMessage, setToastMessage] = useState('');
@@ -135,6 +158,69 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       } else {
         loadInquiriesFromLocalStorage();
       }
+
+      // 3. Load Blogs
+      if (isSupabaseConfigured && supabase) {
+        try {
+          const { data, error } = await supabase
+            .from('hecate_blogs')
+            .select('*')
+            .order('published_at', { ascending: false });
+
+          if (error) throw error;
+          if (data && data.length > 0) {
+            const mapped = data.map((b: any) => ({
+              id: b.id,
+              title: b.title,
+              slug: b.slug,
+              content: b.content,
+              excerpt: b.excerpt,
+              image: b.image,
+              category: b.category,
+              author: b.author,
+              read_time: b.read_time,
+              published_at: b.published_at,
+            }));
+            setBlogs(mapped);
+          } else {
+            // Seed defaults into Supabase database if empty/missing
+            try {
+              const blogsToSeed = defaultBlogs.map(({ id, ...rest }) => rest);
+              const { data: seededData, error: seedError } = await supabase
+                .from('hecate_blogs')
+                .insert(blogsToSeed)
+                .select();
+              
+              if (seedError) throw seedError;
+              if (seededData && seededData.length > 0) {
+                const mapped = seededData.map((b: any) => ({
+                  id: b.id,
+                  title: b.title,
+                  slug: b.slug,
+                  content: b.content,
+                  excerpt: b.excerpt,
+                  image: b.image,
+                  category: b.category,
+                  author: b.author,
+                  read_time: b.read_time,
+                  published_at: b.published_at,
+                }));
+                setBlogs(mapped);
+              } else {
+                loadBlogsFromLocalStorage();
+              }
+            } catch (seedErr) {
+              console.error('Failed to auto-seed default blogs to Supabase, loading from LocalStorage:', seedErr);
+              loadBlogsFromLocalStorage();
+            }
+          }
+        } catch (err) {
+          console.error('Failed to load blogs from Supabase, loading from LocalStorage:', err);
+          loadBlogsFromLocalStorage();
+        }
+      } else {
+        loadBlogsFromLocalStorage();
+      }
     };
 
     fetchResources();
@@ -146,6 +232,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       setInquiries(JSON.parse(savedInquiries));
     } else {
       setInquiries([]);
+    }
+  };
+
+  const loadBlogsFromLocalStorage = () => {
+    const savedBlogs = localStorage.getItem('hecate_blogs');
+    if (savedBlogs) {
+      setBlogs(JSON.parse(savedBlogs));
+    } else {
+      setBlogs(defaultBlogs);
+      localStorage.setItem('hecate_blogs', JSON.stringify(defaultBlogs));
     }
   };
 
@@ -336,6 +432,278 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     );
   });
 
+  // Blog post action functions
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  const handleBlogFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setBlogForm((prev) => {
+      const updated = { ...prev, [name]: value };
+      if (name === 'title' && !editingBlog) {
+        updated.slug = generateSlug(value);
+      }
+      return updated;
+    });
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setToastMessage('Please upload an image file.');
+      setTimeout(() => setToastMessage(''), 3000);
+      return;
+    }
+
+    if (file.size > 1.5 * 1024 * 1024) {
+      setToastMessage('Image size exceeds 1.5MB. Please upload a smaller image.');
+      setTimeout(() => setToastMessage(''), 3000);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64String = event.target?.result as string;
+      setBlogForm((prev) => ({ ...prev, image: base64String }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveBlog = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!blogForm.title.trim() || !blogForm.slug.trim()) {
+      setToastMessage('Title and Slug are required.');
+      setTimeout(() => setToastMessage(''), 3000);
+      return;
+    }
+
+    const blogData = {
+      title: blogForm.title,
+      slug: blogForm.slug,
+      category: blogForm.category,
+      author: blogForm.author,
+      read_time: blogForm.read_time,
+      excerpt: blogForm.excerpt,
+      content: blogForm.content,
+      image: blogForm.image,
+    };
+
+    let isSuccess = false;
+
+    if (editingBlog) {
+      // Update Mode
+      const updatedBlog: BlogPostItem = {
+        ...editingBlog,
+        ...blogData,
+      };
+
+      if (isSupabaseConfigured && supabase) {
+        const isSeedId = !isUUID(editingBlog.id);
+        try {
+          if (isSeedId) {
+            // It's a local seed blog that hasn't been written to Supabase yet.
+            // Insert it without the string ID, letting Supabase assign a proper UUID.
+            const { data, error } = await supabase
+              .from('hecate_blogs')
+              .insert({
+                title: updatedBlog.title,
+                slug: updatedBlog.slug,
+                category: updatedBlog.category,
+                author: updatedBlog.author,
+                read_time: updatedBlog.read_time,
+                excerpt: updatedBlog.excerpt,
+                content: updatedBlog.content,
+                image: updatedBlog.image,
+                published_at: editingBlog.published_at || new Date().toISOString(),
+              })
+              .select()
+              .single();
+
+            if (error) throw error;
+            if (data) {
+              setBlogs((prev) => prev.map((b) => (b.id === editingBlog.id ? data : b)));
+            } else {
+              throw new Error("No data returned from insert operation");
+            }
+            setToastMessage('Blog post uploaded and updated successfully in database.');
+            isSuccess = true;
+          } else {
+            // Standard update for an existing database record
+            const { error } = await supabase
+              .from('hecate_blogs')
+              .update({
+                title: updatedBlog.title,
+                slug: updatedBlog.slug,
+                category: updatedBlog.category,
+                author: updatedBlog.author,
+                read_time: updatedBlog.read_time,
+                excerpt: updatedBlog.excerpt,
+                content: updatedBlog.content,
+                image: updatedBlog.image,
+              })
+              .eq('id', editingBlog.id);
+
+            if (error) throw error;
+            setBlogs((prev) => prev.map((b) => (b.id === editingBlog.id ? updatedBlog : b)));
+            setToastMessage('Blog post updated successfully in database.');
+            isSuccess = true;
+          }
+        } catch (err: any) {
+          console.error('Failed to update blog in Supabase, using LocalStorage fallback:', err);
+          const savedLocally = saveBlogToLocalStorage(updatedBlog);
+          if (savedLocally) {
+            setToastMessage('Saved locally (Warning: Supabase table missing or offline).');
+            isSuccess = true;
+          }
+        }
+      } else {
+        const savedLocally = saveBlogToLocalStorage(updatedBlog);
+        if (savedLocally) {
+          setToastMessage('Blog post updated successfully in local storage.');
+          isSuccess = true;
+        }
+      }
+    } else {
+      // Create Mode
+      const newBlog: BlogPostItem = {
+        id: isSupabaseConfigured ? undefined as any : 'blog-' + Date.now(),
+        ...blogData,
+        published_at: new Date().toISOString(),
+      };
+
+      if (isSupabaseConfigured && supabase) {
+        try {
+          const { data, error } = await supabase
+            .from('hecate_blogs')
+            .insert({
+              title: newBlog.title,
+              slug: newBlog.slug,
+              category: newBlog.category,
+              author: newBlog.author,
+              read_time: newBlog.read_time,
+              excerpt: newBlog.excerpt,
+              content: newBlog.content,
+              image: newBlog.image,
+              published_at: newBlog.published_at,
+            })
+            .select()
+            .single();
+
+          if (error) throw error;
+          if (data) {
+            setBlogs((prev) => [data, ...prev]);
+          } else {
+            setBlogs((prev) => [newBlog, ...prev]);
+          }
+          setToastMessage('Blog post created successfully in database.');
+          isSuccess = true;
+        } catch (err: any) {
+          console.error('Failed to create blog in Supabase, using LocalStorage fallback:', err);
+          newBlog.id = 'blog-' + Date.now();
+          const savedLocally = saveBlogToLocalStorage(newBlog);
+          if (savedLocally) {
+            setToastMessage('Created locally (Warning: Supabase table missing or offline).');
+            isSuccess = true;
+          }
+        }
+      } else {
+        const savedLocally = saveBlogToLocalStorage(newBlog);
+        if (savedLocally) {
+          setToastMessage('Blog post created successfully in local storage.');
+          isSuccess = true;
+        }
+      }
+    }
+
+    if (isSuccess) {
+      // Reset State & Close Modal
+      setBlogForm({
+        title: '',
+        slug: '',
+        category: 'Modular Kitchen',
+        author: 'Hecate Team',
+        read_time: '5 min read',
+        excerpt: '',
+        content: '',
+        image: '/images/service-kitchen.jpg',
+      });
+      setEditingBlog(null);
+      setIsBlogModalOpen(false);
+    }
+    setTimeout(() => setToastMessage(''), 5000);
+  };
+
+  const saveBlogToLocalStorage = (blog: BlogPostItem) => {
+    try {
+      let currentBlogs = [...blogs];
+      if (editingBlog) {
+        currentBlogs = currentBlogs.map((b) => (b.id === blog.id ? blog : b));
+      } else {
+        currentBlogs = [blog, ...currentBlogs];
+      }
+      localStorage.setItem('hecate_blogs', JSON.stringify(currentBlogs));
+      setBlogs(currentBlogs);
+      return true;
+    } catch (e: any) {
+      console.error('LocalStorage write failed:', e);
+      let errorMsg = 'Failed to save: File size exceeds browser local storage limits.';
+      if (e.name === 'QuotaExceededError' || e.code === 22) {
+        errorMsg = 'Error: Image file size is too large for local browser storage limit.';
+      }
+      setToastMessage(errorMsg);
+      setTimeout(() => setToastMessage(''), 6000);
+      return false;
+    }
+  };
+
+  const handleDeleteBlog = async (id: string) => {
+    if (isSupabaseConfigured && supabase && isUUID(id)) {
+      try {
+        const { error } = await supabase
+          .from('hecate_blogs')
+          .delete()
+          .eq('id', id);
+        if (error) throw error;
+        setBlogs((prev) => prev.filter((b) => b.id !== id));
+        setToastMessage('Blog post deleted from database.');
+      } catch (err) {
+        console.error('Failed to delete blog from Supabase, deleting from LocalStorage:', err);
+        deleteBlogFromLocalStorage(id);
+        setToastMessage('Blog post deleted locally.');
+      }
+    } else {
+      deleteBlogFromLocalStorage(id);
+      setToastMessage('Blog post deleted.');
+    }
+    setTimeout(() => setToastMessage(''), 3000);
+  };
+
+  const deleteBlogFromLocalStorage = (id: string) => {
+    const updated = blogs.filter((b) => b.id !== id);
+    setBlogs(updated);
+    localStorage.setItem('hecate_blogs', JSON.stringify(updated));
+  };
+
+  const filteredBlogs = blogs.filter((blog) => {
+    const query = blogSearchQuery.toLowerCase();
+    return (
+      blog.title.toLowerCase().includes(query) ||
+      blog.category.toLowerCase().includes(query) ||
+      blog.author.toLowerCase().includes(query) ||
+      blog.excerpt.toLowerCase().includes(query)
+    );
+  });
+
   return (
     <div className="min-h-screen bg-hecate-cream flex flex-col md:flex-row font-sans text-sm">
       <SEO pageKey="admin" />
@@ -391,6 +759,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                 </span>
               )}
             </button>
+
+            <button
+              onClick={() => setActiveTab('blogs')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors relative uppercase tracking-wider text-xs font-semibold ${
+                activeTab === 'blogs'
+                  ? 'bg-hecate-secondary text-white'
+                  : 'text-white/70 hover:bg-white/5 hover:text-white'
+              }`}
+            >
+              <BookOpen size={16} />
+              <span>Blogs</span>
+              {blogs.length > 0 && (
+                <span className="absolute right-4 bg-hecate-accent text-hecate-primary text-[10px] px-2 py-0.5 rounded-full font-bold">
+                  {blogs.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
 
@@ -410,7 +795,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       </aside>
 
       <main className="flex-1 p-6 md:p-10 overflow-y-auto max-h-screen scrollbar-thin">
-        {activeTab === 'seo' ? (
+        {activeTab === 'seo' && (
           <div className="space-y-8 w-full">
             {/* Top Bar selector */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-hecate-border">
@@ -433,6 +818,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                   <option value="home">Home Page ( / )</option>
                   <option value="about">About Page ( /about )</option>
                   <option value="services">Services Page ( /services )</option>
+                  <option value="service-modern-living">Service: Modern Living</option>
+                  <option value="service-modern-kitchen">Service: Modern Kitchen</option>
+                  <option value="service-modern-office">Service: Modern Office</option>
+                  <option value="service-modern-bedroom">Service: Modern Bedroom</option>
+                  <option value="service-kids-baby-room">Service: Kids & Baby Room</option>
+                  <option value="blog">Blog Feed Page ( /blog )</option>
                   <option value="projects">Projects Page ( /projects )</option>
                   <option value="certificates">Certificates Page ( /certificates )</option>
                   <option value="contact">Contact Page ( /contact )</option>
@@ -691,7 +1082,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
               </div>
             </div>
           </div>
-        ) : (
+        )}
+
+        {activeTab === 'inquiries' && (
           <div className="space-y-8 w-full">
             {/* Top Header & Search inquiries bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-hecate-border">
@@ -807,6 +1200,419 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {activeTab === 'blogs' && (
+          <div className="space-y-8 w-full">
+            {/* Top Header & Search/Add blogs bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-hecate-border">
+              <div>
+                <h1 className="text-2xl font-serif font-bold text-hecate-primary">
+                  Blog Article Management
+                </h1>
+                <p className="text-hecate-muted text-xs font-light mt-1">
+                  Create, publish, edit, and delete news articles, design guides, and trend updates.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 font-sans">
+                {/* Search input */}
+                <div className="relative w-full sm:w-64">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-hecate-muted pointer-events-none">
+                    <Search size={16} />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search articles..."
+                    value={blogSearchQuery}
+                    onChange={(e) => setBlogSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light"
+                  />
+                </div>
+
+                {/* Add new post button */}
+                <button
+                  onClick={() => {
+                    setEditingBlog(null);
+                    setBlogForm({
+                      title: '',
+                      slug: '',
+                      category: 'Modular Kitchen',
+                      author: 'Hecate Team',
+                      read_time: '5 min read',
+                      excerpt: '',
+                      content: '',
+                      image: '/images/service-kitchen.jpg',
+                    });
+                    setIsBlogModalOpen(true);
+                  }}
+                  className="btn-primary gap-2 bg-hecate-secondary text-white py-2.5 px-4 font-semibold tracking-wider text-xs uppercase flex items-center justify-center shrink-0"
+                >
+                  <Plus size={16} />
+                  Add New Post
+                </button>
+              </div>
+            </div>
+
+            {/* Blogs list Table */}
+            <div className="bg-white rounded-xl shadow-sm border border-hecate-border overflow-hidden">
+              {filteredBlogs.length === 0 ? (
+                <div className="p-16 text-center">
+                  <div className="w-16 h-16 bg-hecate-cream rounded-full flex items-center justify-center text-hecate-secondary/40 mx-auto mb-4">
+                    <BookOpen size={32} />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-hecate-primary mb-1">
+                    No Blog Posts Found
+                  </h3>
+                  <p className="text-hecate-muted text-sm font-light">
+                    {blogSearchQuery ? 'Try adjusting your search criteria.' : 'Create your first post using the button above.'}
+                  </p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse text-left font-sans text-xs md:text-sm">
+                    <thead>
+                      <tr className="bg-hecate-cream border-b border-hecate-border text-hecate-primary font-semibold uppercase tracking-wider text-[10px] select-none">
+                        <th className="p-4 w-[8%] whitespace-nowrap">Image</th>
+                        <th className="p-4 w-[40%]">Title & Slug</th>
+                        <th className="p-4">Category</th>
+                        <th className="p-4 whitespace-nowrap">Author / Read Time</th>
+                        <th className="p-4 whitespace-nowrap">Published</th>
+                        <th className="p-4 text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-hecate-border/50 text-hecate-text font-light">
+                      {filteredBlogs.map((blog) => (
+                        <tr key={blog.id} className="hover:bg-hecate-ivory/30 transition-colors">
+                          {/* Image */}
+                          <td className="p-4">
+                            <div className="w-14 h-10 rounded overflow-hidden border border-hecate-border bg-hecate-cream">
+                              <img
+                                src={blog.image || '/images/service-kitchen.jpg'}
+                                alt={blog.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </td>
+                          {/* Title & Slug */}
+                          <td className="p-4">
+                            <div className="font-medium text-hecate-primary text-sm line-clamp-2">
+                              {blog.title}
+                            </div>
+                            <div className="text-[10px] font-mono text-hecate-muted mt-1 break-all select-all">
+                              /blog/{blog.slug}
+                            </div>
+                          </td>
+                          {/* Category */}
+                          <td className="p-4 whitespace-nowrap">
+                            <span className="bg-hecate-cream text-hecate-secondary px-3 py-1 rounded-full uppercase tracking-wider text-[9px] font-semibold">
+                              {blog.category}
+                            </span>
+                          </td>
+                          {/* Author / Read Time */}
+                          <td className="p-4 whitespace-nowrap">
+                            <div className="font-medium text-hecate-primary text-xs">{blog.author}</div>
+                            <div className="text-[10px] text-hecate-muted mt-0.5">{blog.read_time}</div>
+                          </td>
+                          {/* Date */}
+                          <td className="p-4 whitespace-nowrap text-hecate-muted text-xs">
+                            <div className="flex items-center gap-1.5">
+                              <Calendar size={12} className="text-hecate-secondary shrink-0" />
+                              <span>{new Date(blog.published_at).toLocaleDateString('en-IN', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric',
+                              })}</span>
+                            </div>
+                          </td>
+                          {/* Actions */}
+                          <td className="p-4 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                onClick={() => {
+                                  setEditingBlog(blog);
+                                  setBlogForm({
+                                    title: blog.title,
+                                    slug: blog.slug,
+                                    category: blog.category,
+                                    author: blog.author,
+                                    read_time: blog.read_time,
+                                    excerpt: blog.excerpt,
+                                    content: blog.content,
+                                    image: blog.image,
+                                  });
+                                  setIsBlogModalOpen(true);
+                                }}
+                                className="w-9 h-9 rounded-full bg-hecate-cream text-hecate-primary hover:bg-hecate-secondary hover:text-white transition-all flex items-center justify-center border border-hecate-border"
+                                aria-label="Edit blog"
+                              >
+                                <Edit size={14} />
+                              </button>
+                              <button
+                                onClick={() => handleDeleteBlog(blog.id)}
+                                className="w-9 h-9 rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center border border-red-200"
+                                aria-label="Delete blog"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Edit/Create Blog Modal */}
+            {isBlogModalOpen && (
+              <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <div className="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-hecate-border overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
+                  {/* Modal Header */}
+                  <div className="p-6 border-b border-hecate-border bg-hecate-primary text-white flex items-center justify-between">
+                    <div>
+                      <h3 className="font-serif text-lg font-bold text-hecate-accent">
+                        {editingBlog ? 'Edit Blog Post' : 'Create New Blog Post'}
+                      </h3>
+                      <p className="text-white/60 text-xs mt-1 font-light font-sans">
+                        Fill in all fields to publish your article.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setIsBlogModalOpen(false);
+                        setEditingBlog(null);
+                      }}
+                      className="text-white/70 hover:text-white transition-colors text-xl font-medium"
+                    >
+                      &times;
+                    </button>
+                  </div>
+
+                  {/* Modal Body */}
+                  <form onSubmit={handleSaveBlog} className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 font-sans">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {/* Title */}
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Article Title *
+                        </label>
+                        <input
+                          type="text"
+                          name="title"
+                          required
+                          value={blogForm.title}
+                          onChange={handleBlogFormChange}
+                          placeholder="e.g. 5 Tips to Design a Modular Kitchen for Indian Homes"
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light"
+                        />
+                      </div>
+
+                      {/* Slug */}
+                      <div>
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          URL Slug *
+                        </label>
+                        <input
+                          type="text"
+                          name="slug"
+                          required
+                          value={blogForm.slug}
+                          onChange={handleBlogFormChange}
+                          placeholder="modular-kitchen-design-indian-homes"
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light font-mono"
+                        />
+                      </div>
+
+                      {/* Category */}
+                      <div>
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Category *
+                        </label>
+                        <select
+                          name="category"
+                          required
+                          value={blogForm.category}
+                          onChange={handleBlogFormChange}
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-medium"
+                        >
+                          <option value="Modular Kitchen">Modular Kitchen</option>
+                          <option value="Office Space">Office Space</option>
+                          <option value="Interior Trends">Interior Trends</option>
+                          <option value="Modern Living">Modern Living</option>
+                          <option value="Bedroom & Wardrobes">Bedroom & Wardrobes</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+
+                      {/* Author */}
+                      <div>
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Author Name
+                        </label>
+                        <input
+                          type="text"
+                          name="author"
+                          value={blogForm.author}
+                          onChange={handleBlogFormChange}
+                          placeholder="Hecate Team"
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light"
+                        />
+                      </div>
+
+                      {/* Read Time */}
+                      <div>
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Estimated Read Time
+                        </label>
+                        <input
+                          type="text"
+                          name="read_time"
+                          value={blogForm.read_time}
+                          onChange={handleBlogFormChange}
+                          placeholder="5 min read"
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light"
+                        />
+                      </div>
+
+                      {/* Image Selector */}
+                      <div className="md:col-span-2 space-y-3">
+                        <div className="flex justify-between items-center">
+                          <label className="block text-xs font-semibold text-hecate-text">
+                            Article Header Image *
+                          </label>
+                          
+                          {/* Toggle buttons */}
+                          <div className="flex bg-hecate-cream rounded-lg p-0.5 border border-hecate-border select-none">
+                            <button
+                              type="button"
+                              onClick={() => setImageInputMode('url')}
+                              className={`px-3 py-1 text-[10px] uppercase tracking-wider font-semibold rounded-md transition-all ${
+                                imageInputMode === 'url'
+                                  ? 'bg-hecate-secondary text-white shadow-sm'
+                                  : 'text-hecate-muted hover:text-hecate-primary'
+                              }`}
+                            >
+                              Image Link
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setImageInputMode('upload')}
+                              className={`px-3 py-1 text-[10px] uppercase tracking-wider font-semibold rounded-md transition-all ${
+                                imageInputMode === 'upload'
+                                  ? 'bg-hecate-secondary text-white shadow-sm'
+                                  : 'text-hecate-muted hover:text-hecate-primary'
+                              }`}
+                            >
+                              Upload File
+                            </button>
+                          </div>
+                        </div>
+
+                        {imageInputMode === 'url' ? (
+                          <input
+                            type="text"
+                            name="image"
+                            required
+                            value={blogForm.image}
+                            onChange={handleBlogFormChange}
+                            placeholder="/images/service-kitchen.jpg"
+                            className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light"
+                          />
+                        ) : (
+                          <div className="relative">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:uppercase file:font-semibold file:bg-hecate-primary file:text-white hover:file:bg-hecate-secondary file:cursor-pointer"
+                            />
+                            <p className="text-[10px] text-hecate-muted mt-1 leading-normal">
+                              Supports JPG, PNG, WebP, GIF. Maximum size 1.5MB for local cache compatibility.
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Image Preview Card */}
+                        {blogForm.image && (
+                          <div className="mt-3 flex items-start gap-4 p-4 bg-hecate-cream/45 border border-hecate-border rounded-lg max-w-md">
+                            <div className="w-24 h-16 rounded overflow-hidden border border-hecate-border bg-white shrink-0">
+                              <img
+                                src={blogForm.image}
+                                alt="Form Preview"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="space-y-1 overflow-hidden">
+                              <span className="text-[9px] uppercase tracking-wider font-semibold text-hecate-secondary">
+                                Live Preview
+                              </span>
+                              <div className="text-xs text-hecate-muted break-all truncate font-light">
+                                {blogForm.image.startsWith('data:') ? 'Uploaded base64 string' : blogForm.image}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Excerpt */}
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Short Excerpt / Summary (shows on card feed) *
+                        </label>
+                        <textarea
+                          name="excerpt"
+                          required
+                          rows={2}
+                          value={blogForm.excerpt}
+                          onChange={handleBlogFormChange}
+                          placeholder="A quick 1-2 sentence description of the article content to hook readers..."
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light resize-none"
+                        ></textarea>
+                      </div>
+
+                      {/* Content */}
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-semibold text-hecate-text mb-1">
+                          Article Content (HTML formatting supported) *
+                        </label>
+                        <textarea
+                          name="content"
+                          required
+                          rows={10}
+                          value={blogForm.content}
+                          onChange={handleBlogFormChange}
+                          placeholder="<p>Write your article body here. You can use standard HTML tags like <h3>, <p>, <ul>, <li>, <strong> etc.</p>"
+                          className="w-full px-4 py-2.5 rounded-lg border border-hecate-border bg-hecate-ivory focus:outline-none focus:ring-2 focus:ring-hecate-secondary/20 focus:border-hecate-secondary text-sm text-hecate-text font-light font-mono resize-y min-h-[200px]"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    {/* Form Buttons */}
+                    <div className="flex justify-end gap-3 pt-6 border-t border-hecate-border">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsBlogModalOpen(false);
+                          setEditingBlog(null);
+                        }}
+                        className="btn-outline border-hecate-muted text-hecate-muted hover:bg-hecate-muted hover:text-white px-5 py-2.5 font-semibold text-xs tracking-wider uppercase transition-all"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn-primary bg-hecate-secondary text-white px-6 py-2.5 font-semibold text-xs tracking-wider uppercase transition-all"
+                      >
+                        {editingBlog ? 'Update Post' : 'Publish Post'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>

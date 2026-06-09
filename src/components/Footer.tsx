@@ -194,6 +194,9 @@ export const Footer: React.FC = () => {
                 <AnimatedFooterLink to="/certificates">Certifications</AnimatedFooterLink>
               </li>
               <li>
+                <AnimatedFooterLink to="/blog">Blog</AnimatedFooterLink>
+              </li>
+              <li>
                 <AnimatedFooterLink to="/contact">Contact</AnimatedFooterLink>
               </li>
             </ul>
