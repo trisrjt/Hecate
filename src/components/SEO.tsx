@@ -233,8 +233,13 @@ export const SEO: React.FC<SEOProps> = ({ pageKey, defaultSettings }) => {
       robotsMeta.setAttribute('name', 'robots');
       document.head.appendChild(robotsMeta);
     }
-    const indexVal = pageSettings.noindex ? 'noindex' : 'index';
-    const followVal = pageSettings.nofollow ? 'nofollow' : 'follow';
+    // TEMPORARY: Force noindex, nofollow for the whole site.
+    // To make the site public again, delete these two lines:
+    const indexVal = 'noindex';
+    const followVal = 'nofollow';
+    // And uncomment the two lines below:
+    // const indexVal = pageSettings.noindex ? 'noindex' : 'index';
+    // const followVal = pageSettings.nofollow ? 'nofollow' : 'follow';
     robotsMeta.setAttribute('content', `${indexVal}, ${followVal}`);
 
     // 7. Clean up previous injected scripts and style blocks
