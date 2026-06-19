@@ -132,7 +132,7 @@ export const ServiceDetail: React.FC = () => {
 
   return (
     <div>
-      <SEO pageKey="service-detail" />
+      <SEO pageKey={`service-${slug}`} />
 
       {/* Header */}
       <PageHeader title={data.title} subtitle={data.subtitle} bgImage={data.bgImage} />

@@ -12,7 +12,7 @@ export const CTABanner: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
         <ScrollReveal>
-          <span className="text-hecate-accent text-xs font-semibold uppercase tracking-[0.2em] mb-4 block">
+          <span className="text-hecate-secondary text-xs font-semibold uppercase tracking-[0.2em] mb-4 block">
             Partner With Us
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">

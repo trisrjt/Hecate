@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,18 +12,19 @@
 
 @layer base {
   body {
-    @apply bg-hecate-ivory font-sans text-hecate-text antialiased;
+    @apply bg-hecate-ivory text-hecate-text antialiased;
+    font-family: 'Encode Sans', sans-serif;
     background-color: #faf8f5;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    font-family: 'Encode Sans', sans-serif;
   }
 }
 
 @layer components {
   .section-label {
-    @apply mb-3 text-xs font-medium uppercase tracking-[0.15em] text-hecate-accent block;
+    @apply mb-3 text-xs font-medium uppercase tracking-[0.15em] text-hecate-secondary block;
   }
 
   .section-title {
@@ -60,4 +61,12 @@
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(196, 30, 58, 0.4);
+}
+
+/* Bulletproof Google Font "Encode Sans" overrides */
+.font-serif,
+.font-sans,
+h1, h2, h3, h4, h5, h6,
+.section-title {
+  font-family: 'Encode Sans', sans-serif !important;
 }

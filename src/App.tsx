@@ -10,6 +10,8 @@ import { Projects } from './pages/Projects';
 import { Certificates } from './pages/Certificates';
 import { Contact } from './pages/Contact';
 import { Admin } from './pages/Admin';
+import { BlogList } from './pages/BlogList';
+import { BlogPost } from './pages/BlogPost';
 
 // Scroll to top on navigation helper
 const ScrollToTop: React.FC = () => {
@@ -62,6 +64,8 @@ const AnimatedRoutes: React.FC = () => {
           <Route path="/projects" element={<Projects />} />
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/admin_hecate_v1" element={<Admin />} />
           {/* Fallback to home */}
           <Route path="*" element={<Home />} />

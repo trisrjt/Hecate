@@ -63,6 +63,48 @@ export const defaultSEOSettings: Record<string, SEOData> = {
     keywords: 'admin panel, seo manager',
     ogTitle: 'Admin Dashboard | Hecate Furniture',
     ogDescription: 'Secure administrative panel.',
+  },
+  blog: {
+    title: 'Hecate Furniture Blog | Design Trends & Guides',
+    description: 'Read the latest trends, guides, and tips in modern modular kitchen design, ergonomic office workspaces, and premium interior furniture.',
+    keywords: 'furniture blog, kitchen design tips, office planning guide, home interior trends',
+    ogTitle: 'Hecate Furniture Blog | Design Trends & Guides',
+    ogDescription: 'Read the latest guides, trends, and expert tips in interior furniture designs.',
+  },
+  'service-modern-living': {
+    title: 'Modern Living Collections | Hecate Furniture',
+    description: 'Sophisticated and functional modular furniture for your living space. Discover contemporary sofas, coffee tables, and entertainment units.',
+    keywords: 'modern living room, modular sofa, contemporary accent chairs, tv units kolkata',
+    ogTitle: 'Modern Living Collections | Hecate Furniture',
+    ogDescription: 'Premium modular furniture solutions for elegant living rooms.',
+  },
+  'service-modern-kitchen': {
+    title: 'Modern Kitchen Design | Hecate Furniture',
+    description: 'Sleek, modular, and functional kitchen interiors with premium cabinetry, soft-close mechanisms, and ergonomic layouts.',
+    keywords: 'modular kitchen design, premium kitchen cabinets, kitchen islands kolkata',
+    ogTitle: 'Modern Kitchen Interiors | Hecate Furniture',
+    ogDescription: 'High-quality modular kitchen solutions crafted with German precision.',
+  },
+  'service-modern-office': {
+    title: 'Modern Office Workspaces | Hecate Furniture',
+    description: 'Ergonomic, modular office furniture systems designed to boost productivity. Workstations, conference tables, and executive desks.',
+    keywords: 'modular office furniture, ergonomic chairs, corporate fit-out, workstations kolkata',
+    ogTitle: 'Modern Office Solutions | Hecate Furniture',
+    ogDescription: 'Ergonomic workspace designs for corporate and co-working environments.',
+  },
+  'service-modern-bedroom': {
+    title: 'Modern Bedroom Collections | Hecate Furniture',
+    description: 'Serene and premium bedroom furniture including custom platform beds, wardrobe systems, nightstands, and dressing tables.',
+    keywords: 'platform bed frames, custom wardrobe, bedroom furniture supplier kolkata',
+    ogTitle: 'Modern Bedroom Furniture | Hecate Furniture',
+    ogDescription: 'Bespoke bedroom solutions combining comfort, style, and storage.',
+  },
+  'service-kids-baby-room': {
+    title: "Kid's & Baby Room Furniture | Hecate Furniture",
+    description: 'Creative, safe, and colorful furniture custom-made for children. Durable study tables, bunk beds, and toy storage units.',
+    keywords: 'childrens furniture, bunk beds kolkata, study desks, nursery storage',
+    ogTitle: "Kid's & Baby Room Collections | Hecate Furniture",
+    ogDescription: 'Safe and playful modular furniture layouts designed for children.',
   }
 };
 
@@ -84,18 +126,17 @@ export const saveSEOSettings = (settings: Record<string, SEOData>) => {
 
 interface SEOProps {
   pageKey: string;
+  defaultSettings?: SEOData;
 }
 
-export const SEO: React.FC<SEOProps> = ({ pageKey }) => {
+export const SEO: React.FC<SEOProps> = ({ pageKey, defaultSettings }) => {
   const location = useLocation();
   const [pageSettings, setPageSettings] = useState<SEOData>(() => {
-    let activeKey = pageKey === 'service-detail' ? 'services' : pageKey;
-    return defaultSEOSettings[activeKey] || defaultSEOSettings.home;
+    return defaultSEOSettings[pageKey] || defaultSettings || defaultSEOSettings.home;
   });
 
   useEffect(() => {
-    let activeKey = pageKey === 'service-detail' ? 'services' : pageKey;
-    const defaultData = defaultSEOSettings[activeKey] || defaultSEOSettings.home;
+    const defaultData = defaultSEOSettings[pageKey] || defaultSettings || defaultSEOSettings.home;
 
     const loadData = async () => {
       // 1. Try Supabase
@@ -104,7 +145,7 @@ export const SEO: React.FC<SEOProps> = ({ pageKey }) => {
           const { data, error } = await supabase
             .from('hecate_seo_settings')
             .select('*')
-            .eq('page_key', activeKey)
+            .eq('page_key', pageKey)
             .single();
 
           if (error && error.code !== 'PGRST116') {
@@ -132,7 +173,7 @@ export const SEO: React.FC<SEOProps> = ({ pageKey }) => {
 
       // 2. Fallback to LocalStorage
       const localSettings = loadSEOSettings();
-      const pageLocal = localSettings[activeKey];
+      const pageLocal = localSettings[pageKey];
       if (pageLocal) {
         setPageSettings(pageLocal);
       } else {
@@ -192,8 +233,13 @@ export const SEO: React.FC<SEOProps> = ({ pageKey }) => {
       robotsMeta.setAttribute('name', 'robots');
       document.head.appendChild(robotsMeta);
     }
-    const indexVal = pageSettings.noindex ? 'noindex' : 'index';
-    const followVal = pageSettings.nofollow ? 'nofollow' : 'follow';
+    // TEMPORARY: Force noindex, nofollow for the whole site.
+    // To make the site public again, delete these two lines:
+    const indexVal = 'noindex';
+    const followVal = 'nofollow';
+    // And uncomment the two lines below:
+    // const indexVal = pageSettings.noindex ? 'noindex' : 'index';
+    // const followVal = pageSettings.nofollow ? 'nofollow' : 'follow';
     robotsMeta.setAttribute('content', `${indexVal}, ${followVal}`);
 
     // 7. Clean up previous injected scripts and style blocks

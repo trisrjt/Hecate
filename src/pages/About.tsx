@@ -137,7 +137,7 @@ export const About: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <ScrollReveal>
-              <span className="text-hecate-accent text-xs font-medium uppercase tracking-[0.15em] mb-3 block">
+              <span className="text-hecate-secondary text-xs font-medium uppercase tracking-[0.15em] mb-3 block">
                 Our Moto
               </span>
               <h2 className="text-3xl md:text-4xl font-serif font-semibold">
