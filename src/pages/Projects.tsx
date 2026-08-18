@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Award, CheckCircle2 } from 'lucide-react';
+import { X, Award, CheckCircle2, FileText, Download, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { ScrollReveal } from '../components/ScrollReveal';
@@ -100,21 +101,29 @@ export const Projects: React.FC = () => {
       title: 'GREEN GUARD Certificate',
       image: '/images/awards.jpg',
       desc: 'Certified for low chemical emissions, ensuring indoor air quality and environmental safety.',
+      pdfUrl: '/hecate-greenguard-certificate.pdf',
+      fileName: 'HECATE GREEN GUARD CERTIFICATE.pdf',
     },
     {
       title: 'Udyam Registration Certificate',
       image: '/images/awards.jpg',
       desc: 'Official MSME registration by the Government of India, recognizing us as a trusted manufacturer.',
+      pdfUrl: '/hecate-udyam-certificate.pdf',
+      fileName: 'HECATE Udyam Registration Certificate.pdf',
     },
     {
       title: 'ISO 9001:2015 Certificate',
       image: '/images/awards.jpg',
       desc: 'International certification for our quality management systems, ensuring consistent product quality.',
+      pdfUrl: '/hecate-iso-certificate.pdf',
+      fileName: 'HECATE ISO Certificate.pdf',
     },
     {
       title: 'BIFMA Certification',
       image: '/images/awards.jpg',
       desc: 'Business and Institutional Furniture Manufacturers Association certification for safety, durability, and structural adequacy.',
+      pdfUrl: '/hecate-bifma-certificate.pdf',
+      fileName: 'HECATE BIFMA Certificate.pdf',
     },
   ];
 
@@ -280,19 +289,50 @@ export const Projects: React.FC = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {certificates.map((cert, idx) => (
               <ScrollReveal key={idx} delay={idx * 0.1}>
-                <div className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-hecate-border/50 h-full p-6 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-hecate-cream flex items-center justify-center text-hecate-secondary">
-                    <Award size={32} />
+                <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-hecate-border/50 h-full p-6 text-center flex flex-col justify-between">
+                  <div>
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-hecate-cream flex items-center justify-center text-hecate-secondary group-hover:scale-110 transition-transform">
+                      <Award size={28} />
+                    </div>
+                    <h3 className="font-serif text-lg font-semibold mb-2 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
+                      {cert.title}
+                    </h3>
+                    <p className="text-hecate-muted text-xs leading-relaxed font-light mb-4">
+                      {cert.desc}
+                    </p>
                   </div>
-                  <h3 className="font-serif text-lg font-semibold mb-2 text-hecate-primary group-hover:text-hecate-secondary transition-colors">
-                    {cert.title}
-                  </h3>
-                  <p className="text-hecate-muted text-xs leading-relaxed font-light">
-                    {cert.desc}
-                  </p>
+
+                  <div className="pt-2 border-t border-hecate-border/40 flex items-center justify-center gap-2">
+                    <a
+                      href={cert.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-hecate-secondary font-medium hover:underline inline-flex items-center gap-1"
+                    >
+                      <FileText size={13} />
+                      <span>View PDF</span>
+                    </a>
+                    <span className="text-hecate-muted/40">•</span>
+                    <a
+                      href={cert.pdfUrl}
+                      download={cert.fileName}
+                      className="text-xs text-hecate-muted hover:text-hecate-primary font-medium inline-flex items-center gap-1"
+                      title="Download PDF"
+                    >
+                      <Download size={13} />
+                      <span>Download</span>
+                    </a>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link to="/certificates" className="btn-secondary text-xs inline-flex items-center gap-2">
+              <span>View All Official Certificates & Verification Details</span>
+              <ExternalLink size={14} />
+            </Link>
           </div>
         </div>
       </section>
