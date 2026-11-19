@@ -291,7 +291,7 @@ export const Home: React.FC = () => {
           <div className="text-center mb-16">
             <ScrollReveal duration={1.2} yOffset={20}>
               <span className="section-label">Featured Collections</span>
-              <h2 className="section-title text-white">Projects of the Month</h2>
+              <h2 className="section-title text-white">Our Projects</h2>
             </ScrollReveal>
           </div>
 
