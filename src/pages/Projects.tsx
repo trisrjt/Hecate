@@ -10,7 +10,7 @@ import { SEO } from '../components/SEO';
 export interface Project {
   title: string;
   location: string;
-  category: 'Corporate' | 'Co-working' | 'Hospitality' | 'Residential';
+  category: 'Corporate' | 'Co-working' | 'Executive' | 'Commercial';
   desc: string;
   image: string;
   gallery: string[];
@@ -19,29 +19,53 @@ export interface Project {
 export const projects: Project[] = [
     {
       title: 'Collab Deck Co-Working Space',
-      location: 'Rawdon Street, Kolkata',
+      location: 'Kolkata, West Bengal',
       category: 'Co-working',
       desc: 'A premium co-working space featuring custom modular workstations, collaborative lounges, and private phone booths designed for productivity and comfort.',
-      image: '/images/project-collab.jpg',
+      image: '/images/Collab-Deck-2.jpg',
       gallery: [
-        '/images/service-office.jpg',
-        '/images/about-workshop.jpg',
-        '/images/project-collab.jpg',
+        '/images/Collab-Deck-2.jpg',
+        '/images/Collab-Deck-3.jpg',
+        '/images/Collab-Deck-4.jpg',
       ],
     },
     {
       title: 'ICICI Bank Ltd',
-      location: 'Delta Building, Salt Lake, Kolkata',
+      location: 'Kolkata, West Bengal',
       category: 'Corporate',
       desc: 'Complete office fit-out including executive desks, customer service counters, meeting room furniture, and employee workstations.',
-      image: '/images/project-bank.jpg',
+      image: '/images/ICICI-5.jpg',
       gallery: [
-        '/images/service-office.jpg',
-        '/images/about-workshop.jpg',
-        '/images/project-bank.jpg',
+        '/images/ICICI-5.jpg',
+        '/images/ICICI-7.jpg',
+        '/images/ICICI-8.jpg',
       ],
     },
     {
+      title: 'Jac Olivol Hearbal Products Pvt Ltd',
+      location: 'Kolkata, West Bengal',
+      category: 'Executive',
+      desc: 'Jac Olivol Herbal Products transformed their workspace into a biophilic masterpiece. The project involved 15,000 sq ft of innovative planning, ensuring sustainable materials and employee-centric design were at the forefront of the execution.',
+      image: '/images/Jac-Olivol-1.jpg',
+      gallery: [
+        '/images/Jac-Olivol-1.jpg',
+        '/images/Jac-Olivol-2.jpg',
+        '/images/Jac-Olivol-4.jpg',
+      ],
+    },
+    {
+      title: 'Jalan Builders',
+      location: 'Kolkata, West Bengal',
+      category: 'Commercial',
+      desc: 'The Jalan Builders Headquarters serves as a benchmark for modern construction offices. We integrated industrial aesthetics with high-end luxury finishes to create a space that represents their legacy and future-forward vision.',
+      image: '/images/Jalan-Builder-6.jpg',
+      gallery: [
+        '/images/Jalan-Builder-6.jpg',
+        '/images/Jalan-Builder-7.jpg',
+        '/images/Jalan-Builder-9.jpg',
+      ],
+    }
+    /* {
       title: 'Serenity Residences',
       location: 'Ballygunge, Kolkata',
       category: 'Residential',
@@ -88,11 +112,11 @@ export const projects: Project[] = [
         'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80',
         'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80',
       ],
-    },
+    }, */
   ];
 
 export const Projects: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Corporate' | 'Co-working' | 'Hospitality' | 'Residential'>('All');
+  const [activeFilter, setActiveFilter] = useState<'All' | 'Corporate' | 'Co-working' | 'Executive' | 'Commercial'>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isSuccessMsg, setIsSuccessMsg] = useState(false);
 
@@ -212,7 +236,7 @@ export const Projects: React.FC = () => {
           {/* Filter Bar */}
           <ScrollReveal delay={0.1}>
             <div className="flex flex-wrap justify-center gap-3 mb-12 font-sans">
-              {(['All', 'Corporate', 'Co-working', 'Hospitality', 'Residential'] as const).map((filter) => (
+              {(['All', 'Corporate', 'Co-working', 'Executive', 'Commercial'] as const).map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
